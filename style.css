@@ -1,51 +1,98 @@
-*{
+/* General Reset */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-    background-color: rgb(6, 6, 95);
+/* Body Styling */
+body {
+    background-color: #f3f3f3; /* Light background for better readability */
+    color: #003b57; /* Dark teal from the logo for text */
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Navigation Bar */
+nav {
+    background-color: #005870; /* Dark teal matching logo */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 90px;
+    padding: 0 20px;
     color: white;
 }
 
-nav{
-    background-color: rgb(3, 3, 39);
+.left {
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    height: 90px;
 }
 
-nav ul{
+.logo {
+    width: 60px; /* Adjust logo size */
+    height: auto;
+    margin-right: 15px; /* Space between logo and text */
+}
+
+.company-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+nav ul {
     display: flex;
-    justify-content: center;
+    align-items: center;
 }
 
-nav ul li{
+nav ul li {
     list-style: none;
-    margin: 0 23px;
+    margin: 0 20px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
-.left{
-    font-size: 1.3rem;
+nav ul li a {
+    text-decoration: none;
+    color:white;
 }
 
-.firstSection{
+nav ul li a:hover {
+    color:#023045;
+}
+
+/* Hero Section */
+.firstSection {
     display: flex;
-    justify-content: space-around;
-    margin: 23px 0;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 10%;
+    background-color: #e8f6f9; /* Soft teal for a calm vibe */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 40px 5%;
 }
 
-.firstSection div{
-    width: 30%;
+/* Left Section Styling */
+.leftSection h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #005870; /* Logo color */
+    margin-bottom: 20px;
 }
 
-.leftSection{
-    font-size: 2rem;
-
+.leftSection p {
+    font-size: 1.2rem;
+    color: #003b57; /* Dark teal */
+    margin-top: 10px;
+    line-height: 1.5;
 }
 
-.rightSection {
-    
-    
+/* Right Section (Image) Styling */
+.rightSection img {
+    width: 90%; /* Reduce image width */
+    max-width: 500px; /* Ensure it doesn't exceed a reasonable size */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+    margin-left: 30px; /* Add space between text and image */
 }

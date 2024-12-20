@@ -8,32 +8,51 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <nav>
-            <div class="left">Al Zahid Madni Travels (Pvt) Ltd.</div>
+            <div class="left">
+                <img src="logo.png" alt="Logo" class="logo">
+                <span class="company-name">Al Zahid Madni Travels (Pvt) Ltd.</span>
+            </div>
             <div class="right">
                 <ul>
-                    <li>Home</li>
-                    <li>About Us</li>
-                    <li>Services</li>
-                    <li>Gallery</li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/">About Us</a></li>
+                    <li><a href="/">Gallery</a></li>
+                    <li><a href="/">Services</a></li>
                 </ul>            
             </div>
         </nav>
-
     </header>
     <main>
         <section class="firstSection">
             <div class="leftSection">
-                Welcome to Al Zahid Madni Travels
-                <div><p>Your Trusted Partner for Spiritual Journeys Since 2006</p></div>
+                <h1>Welcome to Al Zahid Madni Travels</h1>
+                <p>Your Trusted Partner for Spiritual Journeys Since 2006</p>
+
+                <span id="element"></span>
+
+                <!-- Load library from the CDN -->
+                <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+
+                <!-- Setup and start animation! -->
+                <script>
+                var typed = new Typed('#element', {
+                    strings: ['<strong>Hajj</strong> packages.', '<strong>Umrah</strong> packages.','<strong>Visas</strong>', 'and worldwide <strong>airline tickets</strong>.'],
+                    typeSpeed: 50,
+                    backSpeed: 30,  
+                    backDelay: 1000, 
+                    startDelay: 500, 
+                    loop:true,
+                });
+                </script>
+
             </div>
             <div class="rightSection">
-                <img src="kabah.jpg" alt="" class="kabah">
-
+                <img src="kabah.jpg" alt="Ka'bah" class="kabah">
             </div>
         </section>
     </main>
