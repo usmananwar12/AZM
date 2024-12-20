@@ -53,11 +53,11 @@ nav ul li {
 
 nav ul li a {
     text-decoration: none;
-    color:white;
+    color: white;
 }
 
 nav ul li a:hover {
-    color:#023045;
+    color: #023045;
 }
 
 /* Hero Section */
@@ -95,4 +95,59 @@ nav ul li a:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     object-fit: cover;
     margin-left: 30px; /* Add space between text and image */
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: center; /* Center align everything */
+        padding: 10px 20px;
+    }
+
+    .left {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center logo and text */
+        margin-bottom: 10px;
+    }
+
+    .right ul {
+        display: flex; /* Make navigation items horizontal */
+        justify-content: center; /* Center the items */
+        gap: 15px; /* Add spacing between items */
+        padding: 0;
+    }
+
+    .right ul li {
+        list-style: none;
+    }
+
+    .right ul li a {
+        text-decoration: none;
+        color: white;
+        font-weight: 600;
+    }
+
+    .right ul li a:hover {
+        color: #023045;
+    }
+
+    .firstSection {
+        flex-direction: column;
+        padding: 20px 5%;
+    }
+
+    .leftSection h1 {
+        font-size: 2rem;
+    }
+
+    .leftSection p {
+        font-size: 1rem;
+    }
+
+    .rightSection img {
+        margin: 20px 0 0 0;
+        width: 100%;
+    }
 }
