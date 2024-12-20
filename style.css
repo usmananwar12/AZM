@@ -10,17 +10,24 @@ body {
     background-color: #f3f3f3; /* Light background for better readability */
     color: #003b57; /* Dark teal from the logo for text */
     font-family: 'Poppins', sans-serif;
+    margin-top: 110px; 
 }
 
 /* Navigation Bar */
 nav {
-    background-color: #005870; /* Dark teal matching logo */
+    position: fixed; /* Fix the navbar at the top */
+    top: 0; /* Align it to the top of the viewport */
+    left: 0; /* Align it to the left of the viewport */
+    width: 100%; /* Make the navbar span the entire width of the page */
+    background-color: #005870; /* Keep your original styling */
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 90px;
     padding: 0 20px;
     color: white;
+    z-index: 1000; /* Ensure the navbar stays on top of other elements */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
 }
 
 .left {
@@ -103,6 +110,10 @@ nav ul li a:hover {
         flex-direction: column;
         align-items: center; /* Center align everything */
         padding: 10px 20px;
+        height: 150px;
+    }
+    body{
+        margin-top: 160px;
     }
 
     .left {
@@ -150,4 +161,136 @@ nav ul li a:hover {
         margin: 20px 0 0 0;
         width: 100%;
     }
+}
+
+.hidden {
+    display: none;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 15px; /* Space between buttons */
+}
+
+.nav-btn {
+    background-color: #007a9e; /* Slightly lighter teal for contrast */
+    color: white; /* White text for contrast */
+    border: none; /* Remove default button border */
+    border-radius: 5px; /* Slight rounding of corners */
+    padding: 10px 15px; /* Padding for a better clickable area */
+    font-size: 1rem; /* Adjust text size */
+    font-weight: bold; /* Bold text for emphasis */
+    cursor: pointer; /* Pointer cursor for interactivity */
+    transition: all 0.3s ease; /* Smooth hover effect */
+}
+
+.nav-btn:hover {
+    background-color: #005870; /* Darker teal on hover */
+    color: #f3f3f3; /* Softer white for hover contrast */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+.nav-btn:active {
+    background-color: #004454; /* Even darker teal when clicked */
+    transform: scale(0.98); /* Slight press effect */
+}
+
+/* About Us Page */
+#about-us-page {
+    padding: 20px;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+#about-us-page h1 {
+    font-size: 2rem;
+    color: #005870;
+    margin-bottom: 15px;
+}
+
+#about-us-page h2 {
+    margin-top: 25px;
+    font-size: 1.5rem;
+    color: #003b57;
+}
+
+#about-us-page ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+#about-us-page ul li {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #e8f6f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+#about-us-page ul li strong {
+    color: #005870;
+}
+
+#about-us-page input[type="file"] {
+    margin-top: 10px;
+}
+
+.external-link {
+    color: #007a9e;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.external-link:hover {
+    color: #003b57;
+}
+/* iata.png image styling for a sleek and smaller look */
+.certificate-img {
+    max-width: 250px;  /* Sets a specific maximum width */
+    height: auto;      /* Keeps the aspect ratio intact */
+    margin-top: 10px;  /* Adds some space at the top */
+    margin-bottom: 20px; /* Adds space at the bottom */
+    display: block;    /* Ensures the image behaves like a block element */
+    margin-left: 10px;
+    border-radius: 5px; /* Adds rounded corners for a sleek look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+}
+
+/* Gallery Section Styling */
+.gallery-section {
+    margin: 30px 5%;
+}
+
+.gallery-section h2 {
+    font-size: 1.8rem;
+    color: #005870;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.gallery-item {
+    margin-bottom: 30px;
+    text-align: center;
+    padding: 15px;
+    background-color: #e8f6f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-img {
+    width: 90%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.caption {
+    font-size: 1rem;
+    color: #003b57;
+    line-height: 1.6;
 }
