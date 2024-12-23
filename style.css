@@ -352,3 +352,91 @@ nav ul li a:hover {
         margin-bottom: 10px;
     }
 }
+
+/* General Page Styling */
+#hajj-2025-page {
+    display: none; /* Hide by default */
+    padding: 20px;
+    background-color: #f9f9f9;
+    font-family: 'Poppins', sans-serif;
+}
+
+#hajj-2025-page.active {
+    display: block; /* Show when active class is added */
+}
+
+#hajj-2025-page h1 {
+    text-align: center;
+    font-size: 2.5em;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* Package Container */
+.package {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.package:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Package Heading */
+.package h2 {
+    font-size: 1.8em;
+    color: #444;
+    margin: 15px 0;
+    font-weight: 600;
+}
+
+/* Package Image */
+.package-img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+/* Book Now Button */
+.book-now-btn {
+    background-color: #007BFF; /* Primary Blue */
+    color: #fff;
+    font-size: 1em;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+}
+
+.book-now-btn:hover {
+    background-color: #0056b3; /* Darker Blue */
+}
+
+/* Responsive Layout */
+@media (min-width: 768px) {
+    #hajj-2025-page {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .package {
+        max-width: 600px;
+        display: inline-block;
+    }
+}
+
+  
