@@ -12,6 +12,24 @@
             margin: 0;
             padding: 0;
         }
+        .close-button {
+            display: inline-block;
+            margin: 20px;
+            padding: 10px 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #fff;
+            background-color: #dc3545;
+            text-decoration: none;
+            border-radius: 5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border: none;
+        }
+        .close-button:hover {
+            background-color: #a71d2a;
+        }
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -71,10 +89,13 @@
     </style>
 </head>
 <body>
+    <!-- Close Button -->
+    <button class="close-button" onclick="history.back()">Close</button>
+    
     <div class="container">
         <!-- Category A Package -->
         <div class="package">
-            <img src="pics/gold.png" alt="Category A Package">
+            <img src="pics/economy.png" alt="Category A Package">
             <h2>Category A Package</h2>
             <a href="book-category-a.html" class="book-now">Book Now</a>
         </div>
