@@ -71,6 +71,7 @@ nav ul li a:hover {
 .firstSection {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap; /* Allows wrapping to the next line */
     align-items: center;
     padding: 40px 10%;
     background-color: #e8f6f9; /* Soft teal for a calm vibe */
@@ -104,6 +105,11 @@ nav ul li a:hover {
     margin-left: 30px; /* Add space between text and image */
 }
 
+.leftSection,
+.rightSection {
+    flex: 1; /* Make both sections take equal width */
+    padding: 20px;
+}
 /* Mobile Styles */
 @media (max-width: 768px) {
     nav {
@@ -352,20 +358,14 @@ nav ul li a:hover {
         margin-bottom: 10px;
     }
 }
-
-.hajj-announcement {
-    background-color: #f8f9fa;
-    padding: 40px 0;
-    text-align: center;
-}
-
 .announcement-container {
     max-width: 1200px;
     margin: 0 auto;
+    width: 100%; /* Make it span full width */
     padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    margin-top: 20px;
+    /*background-color: #f1f9ff; /* Light background to match theme */
+    text-align: center; /* Center align text */
 }
 
 .announcement-container h2 {
