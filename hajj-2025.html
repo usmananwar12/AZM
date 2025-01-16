@@ -12,23 +12,33 @@
             margin: 0;
             padding: 0;
         }
-        .close-button {
-            display: inline-block;
-            margin: 20px;
+        nav {
+            background-color: #005870; 
+            color: white;
+            display: flex;
+            align-items: center;
             padding: 10px 20px;
-            font-size: 0.9em;
-            font-weight: 600;
-            color: #fff;
-            background-color: #dc3545;
-            text-decoration: none;
-            border-radius: 5px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .close-button:hover {
-            background-color: #a71d2a;
+        nav img {
+            height: 40px; /* Adjust height as necessary */
+            margin-right: 10px;
+        }
+        nav .title {
+            font-size: 20px;
+            flex: 1;
+        }
+        nav .close-btn {
+            background-color: #ff4d4d;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        nav .close-btn:hover {
+            background-color: #e60000;
         }
         .container {
             max-width: 1200px;
@@ -90,24 +100,32 @@
 </head>
 <body>
     <!-- Close Button -->
-    <button class="close-button" onclick="history.back()">Close</button>
-    
+    <nav>
+        <img src="pics/logo.png" alt="Company Logo">
+        <div class="title">Hajj 2025</div>
+        <button class="close-btn" onclick="window.history.back()">Close</button>
+    </nav>
     <div class="container">
         <!-- Category A Package -->
         <div class="package">
-            <img src="pics/economy.png" alt="Category A Package">
-            <h2>Category A Package</h2>
+            <img src="pics/a-short.png" alt="Category A Package">
+            <h2>14 Days Category A Package</h2>
             <a href="https://forms.gle/ih1qsdPuxEWo9YnS6" class="book-now">Book Now</a>
         </div>
 
         <!-- Category B Package -->
         <div class="package">
             <img src="pics/gold.png" alt="Category B Package">
-            <h2>Category B Package</h2>
+            <h2>20 Days Category A Package</h2>
             <a href="https://www.instagram.com/alzahidmadni/profilecard/?igsh=MXB2dHRxOGd6NmZsNA==" class="book-now">Book Now</a>
         </div>
 
         <!-- Category D Package -->
+        <div class="package">
+            <img src="pics/economy.png" alt="Category D Package">
+            <h2>Category D Package</h2>
+            <a href="https://www.instagram.com/alzahidmadni/profilecard/?igsh=MXB2dHRxOGd6NmZsNA==" class="book-now">Book Now</a>
+        </div>
         <div class="package">
             <img src="pics/economy.png" alt="Category D Package">
             <h2>Category D Package</h2>

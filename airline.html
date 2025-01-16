@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airline Tickets</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+        nav {
+            background-color: #005870; 
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 15px 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        nav img {
+            height: 50px;
+            margin-right: 15px;
+        }
+        nav .title {
+            font-size: 24px;
+            font-weight: bold;
+            flex: 1;
+        }
+        nav .close-btn {
+            background-color: #ff4d4d;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        nav .close-btn:hover {
+            background-color: #e60000;
+        }
+        .content {
+            padding: 50px 20px;
+            text-align: center;
+        }
+        .content h1 {
+            font-size: 28px;
+            color: #005870;
+            margin-bottom: 20px;
+        }
+        #typed-airlines {
+            font-size: 20px;
+            color: #00799e;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+        .airline-logos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            justify-items: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .airline-logos img {
+            width: 100px;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .airline-logos img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+        .contact {
+            margin-top: 40px;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+        .contact p {
+            margin: 5px 0;
+        }
+        .contact a {
+            color: #005870;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .contact a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            margin-top: 50px;
+            background-color: #f9f9f9;
+            padding: 15px 0;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+    <!-- Link to Typed.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+</head>
+<body>
+    <nav>
+        <img src="pics/logo.png" alt="Company Logo">
+        <div class="title">Airline Tickets</div>
+        <button class="close-btn" onclick="window.history.back()">Close</button>
+    </nav>
+    <div class="content">
+        <h1>We Deal In:</h1>
+        <span id="typed-airlines"></span>
+        <div class="airline-logos">
+            <img src="pics/pia.png" alt="PIA">
+            <img src="pics/flydubai.png" alt="Fly Dubai">
+            <img src="pics/saudi.png" alt="Saudi Airlines">
+            <img src="pics/airblue.png" alt="Air Blue">
+            <img src="pics/etihad.png" alt="Etihad">
+            <img src="pics/emirates.png" alt="Emirates">
+            <img src="pics/gulf.jpg" alt="Gulf Air">
+            <img src="pics/qatar.png" alt="Qatar Airways">
+            <img src="pics/thai.png" alt="Thai Airways">
+            <img src="pics/turkish.png" alt="Turkish Airlines">
+            <img src="pics/airarabia.png" alt="Air Arabia">
+            <img src="pics/airsial.png" alt="Airsial">
+            <img src="pics/flyjinnah.png" alt="Fly Jinnah">
+            <img src="pics/american.png" alt="American Airlines">
+        </div>
+        <div class="contact">
+            <p>For Booking or Queries call:</p>
+            <p><strong>0300-9666476</strong> or <strong>0306-1166416</strong></p>
+            <p>Email: <a href="mailto:alzahidmadni@hotmail.com">alzahidmadni@hotmail.com</a></p>
+            <p>Follow us on social media:</p>
+            <p>
+                <a href="https://instagram.com/alzahidmadni" target="_blank">Instagram</a> |
+                <a href="https://facebook.com/alzahidmadni" target="_blank">Facebook</a> |
+                <a href="https://youtube.com/@alzahidmadni" target="_blank">YouTube</a>
+            </p>
+        </div>
+    </div>
+    <footer>
+        &copy; 2025 Al Zahid Madni Travels (Pvt) Ltd. All Rights Reserved.
+    </footer>
+    <script>
+        // Initialize Typed.js for the airline names
+        const options = {
+            strings: [
+                "PIA",
+                "Fly Dubai",
+                "Saudi Airlines",
+                "Air Blue",
+                "Etihad",
+                "Emirates",
+                "Gulf Air",
+                "Qatar Airways",
+                "Thai Airways",
+                "Turkish Airlines",
+                "Air Arabia",
+                "Airsial",
+                "Fly Jinnah",
+                "American Airlines"
+            ],
+            typeSpeed: 50,
+            backSpeed: 30,
+            loop: true
+        };
+        const typed = new Typed("#typed-airlines", options);
+    </script>
+</body>
+</html>
