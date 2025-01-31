@@ -3,54 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Umrah</title>
+    <title>Umrah Packages</title>
     <style>
+        /* General Styling */
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
         }
+
         nav {
-            background-color: #005870; 
+            background-color: #005870;
             color: white;
             display: flex;
             align-items: center;
-            padding: 10px 20px;
+            padding: 15px 30px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         nav img {
-            height: 40px; /* Adjust height as necessary */
-            margin-right: 10px;
+            height: 50px;
+            margin-right: 15px;
         }
+
         nav .title {
-            font-size: 20px;
+            font-size: 24px;
+            font-weight: bold;
             flex: 1;
         }
+
         nav .close-btn {
             background-color: #ff4d4d;
             border: none;
             color: white;
-            padding: 8px 16px;
-            border-radius: 4px;
+            padding: 10px 20px;
+            border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
         }
+
         nav .close-btn:hover {
             background-color: #e60000;
         }
-        main {
-            padding: 20px;
+
+        header {
+            background-image: url('pics/kaaba.jpg');
+            background-size: cover;
+            background-position: center;
             text-align: center;
+            padding: 100px 20px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        header p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: #ff8c00;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #ff7000;
+        }
+
+        .section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .section h2 {
+            font-size: 28px;
+            color: #005870;
+            margin-bottom: 20px;
+        }
+
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            width: 280px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        footer {
+            background-color: #f3f7f9;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+        .contact {
+            background-color: #f3f7f9;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 20px;
+            border-top: 2px solid #ddd;
+        }
+
+        .contact p {
+            font-size: 18px;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .contact a {
+            color: #005870;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .contact a:hover {
+            color: #ff8c00;
+        }
+
+        .contact strong {
+            color: #005870;
+        }
+
+        .social-links {
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            margin: 0 10px;
+            color: #005870;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .social-links a:hover {
+            color: #ff8c00;
         }
     </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
     <nav>
         <img src="pics/logo.png" alt="Company Logo">
-        <div class="title">Umrah</div>
+        <div class="title">Umrah Packages</div>
         <button class="close-btn" onclick="window.history.back()">Close</button>
     </nav>
-    <main>
-        <p>Hey, this is the Umrah page.</p>
-    </main>
+
+    <!-- Hero Section -->
+    
+
+    <!-- Packages Section -->
+    <div class="section" id="packages">
+        <h2>Our Umrah Packages</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>Economy Packages</h3>
+                <p>Affordable packages with all basic amenities for a comfortable journey.</p>
+            </div>
+            <div class="card">
+                <h3>Standard Packages</h3>
+                <p>Enjoy better accommodations and services at an affordable rate.</p>
+            </div>
+            <div class="card">
+                <h3>Luxury Packages</h3>
+                <p>Premium services, 5-star hotels, and luxury transport for a lavish journey.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customization Section -->
+    <div class="section" id="customization">
+        <h2>Customize Your Package</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>Hotels</h3>
+                <p>Stay at your preferred hotel, ranging from budget to 5-star accommodations.</p>
+            </div>
+            <div class="card">
+                <h3>Airline Tickets</h3>
+                <p>Book flights on your desired airline with flexible dates and timings.</p>
+            </div>
+            <div class="card">
+                <h3>Visa Services</h3>
+                <p>Visa processing available with or without bus transport.</p>
+            </div>
+            <div class="card">
+                <h3>Transport</h3>
+                <p>Luxury GMCs, sedans like Camry or Sonata, or vans like Hiace, H1, and Staria.</p>
+            </div>
+        </div>
+    </div>
+    <div class="contact">
+        <p>For Booking or Queries call:</p>
+        <p><strong>0300-9666476</strong> or <strong>0306-1166416</strong></p>
+        <p>Email: <a href="mailto:alzahidmadni@hotmail.com">alzahidmadni@hotmail.com</a></p>
+        <p>Follow us on social media:</p>
+        <p>
+            <a href="https://instagram.com/alzahidmadni" target="_blank">Instagram</a> |
+            <a href="https://facebook.com/alzahidmadni" target="_blank">Facebook</a> |
+            <a href="https://youtube.com/@alzahidmadni" target="_blank">YouTube</a>
+        </p>
+    </div>
+    <!-- Footer -->
+    <footer>
+        &copy; 2025 Al Zahid Madni Travels (Pvt) Ltd. All Rights Reserved.
+    </footer>
 </body>
 </html>

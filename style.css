@@ -395,3 +395,10 @@ nav ul li a:hover {
 .view-more-btn:hover {
     background-color: #0056b3;
 }
+footer {
+    background-color: #f9f9f9;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    color: #555;
+}
