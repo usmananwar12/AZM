@@ -357,28 +357,44 @@ nav ul li a:hover {
     .service-img {
         margin-bottom: 10px;
     }
-}
-.announcement-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%; /* Make it span full width */
-    padding: 20px;
-    margin-top: 20px;
-    /*background-color: #f1f9ff; /* Light background to match theme */
-    text-align: center; /* Center align text */
+}.announcement-container {
+    background-color: #f9f9f9; /* Soft light gray for contrast */
+    border: 2px solid #005870; /* Match header color for consistency */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    padding: 20px; /* Add generous spacing */
+    margin: 30px auto; /* Center and add margin around the container */
+    text-align: center; /* Center-align text */
+    max-width: 800px; /* Limit the width for better readability */
 }
 
 .announcement-container h2 {
-    font-size: 2em;
-    color: #333;
-    font-weight: 600;
+    color: #005870; /* Match brand color */
+    font-size: 2rem; /* Larger headline */
+    font-weight: bold; /* Emphasize the announcement */
     margin-bottom: 10px;
 }
 
 .announcement-container p {
-    font-size: 1.1em;
-    color: #555;
+    font-size: 1rem; /* Comfortable font size */
+    line-height: 1.6; /* Add line spacing for readability */
+    color: #333; /* Neutral dark color for text */
     margin-bottom: 20px;
+}
+
+.announcement-container a {
+    background-color: #005870; /* Match brand button color */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.announcement-container a:hover {
+    background-color: #003e4d; /* Darker shade on hover */
 }
 
 .view-more-btn {
