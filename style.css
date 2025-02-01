@@ -116,7 +116,7 @@ nav ul li a:hover {
         flex-direction: column;
         align-items: center; /* Center align everything */
         padding: 10px 20px;
-        height: 170px;
+        height: 210px;
     }
     body{
         margin-top: 160px;
