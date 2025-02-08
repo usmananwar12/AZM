@@ -183,7 +183,7 @@ nav ul li a:hover {
     color: white; /* White text for contrast */
     border: none; /* Remove default button border */
     border-radius: 5px; /* Slight rounding of corners */
-    padding: 10px 15px; /* Padding for a better clickable area */
+    padding: 10px 10px; /* Padding for a better clickable area */
     font-size: 1rem; /* Adjust text size */
     font-weight: bold; /* Bold text for emphasis */
     cursor: pointer; /* Pointer cursor for interactivity */
