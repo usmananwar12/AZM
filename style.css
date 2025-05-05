@@ -458,3 +458,10 @@ footer {
     font-size: 0.9rem;
     opacity: 0.8;
 }
+
+.hero-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
