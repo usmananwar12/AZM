@@ -32,7 +32,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         nav img {
-            height: 40px; /* Adjust height as necessary */
+            height: 40px; 
             margin-right: 10px;
         }
         nav .title {
@@ -86,21 +86,19 @@
             margin: 10px 0;
             font-weight: 600;
         }
-        .book-now {
+        .sold-out {
             display: inline-block;
             margin-top: 10px;
             padding: 10px 20px;
             font-size: 0.9em;
             font-weight: 600;
             color: #fff;
-            background-color: #007BFF;
+            background-color: #6c757d;
             text-decoration: none;
             border-radius: 5px;
             text-transform: uppercase;
-            transition: background-color 0.3s;
-        }
-        .book-now:hover {
-            background-color: #0056b3;
+            cursor: not-allowed;
+            opacity: 0.7;
         }
         @media (min-width: 768px) {
             .container {
@@ -121,26 +119,27 @@
         <div class="package">
             <img src="pics/a-short.png" alt="Category A Package">
             <h2>14 Days Diamond Package</h2>
-            <a href="https://forms.gle/ih1qsdPuxEWo9YnS6" class="book-now">Book Now</a>
+            <span class="sold-out">Sold Out</span>
         </div>
 
         <!-- Category B Package -->
         <div class="package">
             <img src="pics/b-short.png" alt="Category B Package">
             <h2>14 Days Gold Package</h2>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeGUEKWQ1tHfTksgWaYpM8ssrSQrlgzCsWDIwg8kLMCtKJrxw/viewform?usp=dialog" class="book-now">Book Now</a>
+            <span class="sold-out">Sold Out</span>
         </div>
 
         <!-- Category D Package -->
         <div class="package">
             <img src="pics/d-short16.png" alt="Category D Package">
-            <h2>16 days Standard Package</h2>
-            <a href="https://forms.gle/toG1aaQj575wiJjw5" class="book-now">Book Now</a>
+            <h2>16 Days Standard Package</h2>
+            <span class="sold-out">Sold Out</span>
         </div>
+
         <div class="package">
             <img src="pics/d-short.png" alt="Category D Package">
             <h2>14 Days Standard Package</h2>
-            <a href="https://forms.gle/D3YhncxMtn9dMwqG9" class="book-now">Book Now</a>
+            <span class="sold-out">Sold Out</span>
         </div>
     </div>
 </body>
