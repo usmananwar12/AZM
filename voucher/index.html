@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al Zahid Madni Travels - Voucher Generator</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- jsPDF library for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+        
+        .main-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+        
+        .header-section {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px 12px 0 0;
+            text-align: center;
+        }
+        
+        .logo-placeholder {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .form-section {
+            padding: 30px;
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .form-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .table-responsive {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .table th {
+            background-color: #3498db;
+            color: white;
+            font-weight: 500;
+            border: none;
+            padding: 12px 8px;
+            font-size: 14px;
+        }
+        
+        .table td {
+            padding: 10px 8px;
+            vertical-align: middle;
+            border-color: #dee2e6;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 500;
+            border-radius: 6px;
+        }
+        
+        .voucher-preview {
+            background: white;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 30px;
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .voucher-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .voucher-table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+        
+        .voucher-table th,
+        .voucher-table td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: left;
+            font-size: 12px;
+        }
+        
+        .voucher-table th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+        
+        .terms-list {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .terms-list ol {
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+        
+        .terms-list li {
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        /* PDF Print Container - Hidden by default */
+        .pdf-container {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            padding: 20mm;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            color: #000;
+        }
+
+        .pdf-container .pdf-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #000;
+        }
+
+        .pdf-container .pdf-header h1 {
+            font-size: 24px;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .pdf-container .pdf-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .pdf-container .pdf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .pdf-container .pdf-table th,
+        .pdf-container .pdf-table td {
+            border: 1px solid #000;
+            padding: 6px;
+            text-align: left;
+            font-size: 10px;
+        }
+
+        .pdf-container .pdf-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .pdf-container .pdf-section-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 15px 0 8px 0;
+        }
+
+        .pdf-container .pdf-footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #000;
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 10px;
+                border-radius: 8px;
+            }
+            
+            .header-section {
+                padding: 20px;
+            }
+            
+            .form-section {
+                padding: 20px;
+            }
+            
+            .table-responsive {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="main-container">
+            <!-- Header Section -->
+            <div class="header-section">
+                <div class="logo-placeholder">
+                    <i class="fas fa-plane"></i>
+                </div>
+                <h1 class="mb-0">Al Zahid Madni Travels</h1>
+                <p class="mb-0 mt-2">Voucher Generator</p>
+            </div>
+            
+            <!-- Form Section -->
+            <div class="form-section">
+                <form id="voucherForm">
+                    <!-- Voucher Info -->
+                    <div class="form-card">
+                        <h4 class="section-title">Voucher Information</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Voucher No</label>
+                                <input type="text" class="form-control" id="voucherNo" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Date</label>
+                                <input type="date" class="form-control" id="voucherDate" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pax Details -->
+                    <div class="form-card">
+                        <h4 class="section-title">Pax Details</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="paxTable">
+                                <thead>
+                                    <tr>
+                                        <th>Passport No</th>
+                                        <th>Name</th>
+                                        <th>With Bed</th>
+                                        <th>With Transport</th>
+                                        <th>With Ziarat</th>
+                                        <th>With Food</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" class="form-control form-control-sm" name="passportNo"></td>
+                                        <td><input type="text" class="form-control form-control-sm" name="paxName"></td>
+                                        <td><input type="checkbox" class="form-check-input" name="withBed"></td>
+                                        <td><input type="checkbox" class="form-check-input" name="withTransport"></td>
+                                        <td><input type="checkbox" class="form-check-input" name="withZiarat"></td>
+                                        <td><input type="checkbox" class="form-check-input" name="withFood"></td>
+                                        <td><button type="button" class="btn btn-sm btn-danger" onclick="removeRow(this)">Remove</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="addPaxRow()">Add Pax</button>
+                    </div>
+                    
+                    <!-- Flight Details -->
+                    <div class="form-card">
+                        <h4 class="section-title">Flight Details</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="flightTable">
+                                <thead>
+                                    <tr>
+                                        <th>Airline</th>
+                                        <th>Flight No</th>
+                                        <th>Sector</th>
+                                        <th>Flight Date</th>
+                                        <th>Departure Time</th>
+                                        <th>Arrival Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" class="form-control form-control-sm" name="airline"></td>
+                                        <td><input type="text" class="form-control form-control-sm" name="flightNo"></td>
+                                        <td><input type="text" class="form-control form-control-sm" name="sector"></td>
+                                        <td><input type="date" class="form-control form-control-sm" name="flightDate"></td>
+                                        <td><input type="time" class="form-control form-control-sm" name="departureTime"></td>
+                                        <td><input type="time" class="form-control form-control-sm" name="arrivalTime"></td>
+                                        <td><button type="button" class="btn btn-sm btn-danger" onclick="removeRow(this)">Remove</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="addFlightRow()">Add Flight</button>
+                    </div>
+                    
+                    <!-- Accommodation Details -->
+                    <div class="form-card">
+                        <h4 class="section-title">Accommodation Details</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="accommodationTable">
+                                <thead>
+                                    <tr>
+                                        <th>City</th>
+                                        <th>Hotel Name</th>
+                                        <th>Confirmation</th>
+                                        <th>Check-in</th>
+                                        <th>Check-out</th>
+                                        <th>Nights</th>
+                                        <th>Room Type</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" class="form-control form-control-sm" name="city"></td>
+                                        <td><input type="text" class="form-control form-control-sm" name="hotelName"></td>
+                                        <td><input type="text" class="form-control form-control-sm" name="confirmation"></td>
+                                        <td><input type="date" class="form-control form-control-sm" name="checkin"></td>
+                                        <td><input type="date" class="form-control form-control-sm" name="checkout"></td>
+                                        <td><input type="number" class="form-control form-control-sm" name="nights"></td>
+                                        <td><input type="text" class="form-control form-control-sm" name="roomType"></td>
+                                        <td><button type="button" class="btn btn-sm btn-danger" onclick="removeRow(this)">Remove</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="addAccommodationRow()">Add Accommodation</button>
+                    </div>
+                    
+                    <!-- Remarks -->
+                    <div class="form-card">
+                        <h4 class="section-title">Remarks</h4>
+                        <textarea class="form-control" id="remarks" rows="4" placeholder="Enter any additional remarks or special instructions..."></textarea>
+                    </div>
+                    
+                    <!-- Terms and Conditions -->
+                    <div class="form-card">
+                        <h4 class="section-title">Terms and Conditions</h4>
+                        <div class="terms-list">
+                            <ol>
+                                <li>I will abide by the details of this agreement as per the requirements, guidance, and regulations of the Ministry of Hajj & Umrah of the KSA.</li>
+                                <li>In the event of my non-compliance with this package and should I overstay, I submit myself to the laid-down procedure of KSA.</li>
+                                <li>In case of emergency, I shall report the matter to the service provider whose address in Makkah, Madinah, and Jeddah has been known to me.</li>
+                                <li>That I will depart the Kingdom on completion of my package as per program & visa and will not overstay under any circumstances.</li>
+                                <li>That I will not take up employment with or without pay.</li>
+                                <li>It is not permitted for anyone to sleep or camp (with or without luggage) around the Holy sites; anyone apprehended by MOH will have to pay the fine and cost of accommodation. MOH will then release the passport.</li>
+                                <li>Children under 10 years will share a bed with parents.</li>
+                                <li>The company will not be held responsible for any service that is not mentioned on the voucher.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="text-center">
+                        <button type="button" class="btn btn-primary me-3" onclick="previewVoucher()">
+                            <i class="fas fa-eye me-2"></i>Preview Voucher
+                        </button>
+                        <button type="button" class="btn btn-success" onclick="downloadPDF()">
+                            <i class="fas fa-download me-2"></i>Download PDF
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Voucher Preview -->
+                <div id="voucherPreview" class="voucher-preview">
+                    <div class="voucher-header">
+                        <h2>AL ZAHID MADNI TRAVELS</h2>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <strong>Voucher No: <span id="previewVoucherNo"></span></strong>
+                            </div>
+                            <div class="col-6 text-end">
+                                <strong>Date: <span id="previewDate"></span></strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="previewContent">
+                        <!-- Content will be populated by JavaScript -->
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <p><strong>Received By ____________________</strong></p>
+                        <small class="text-muted">Copyright © 2025. All rights reserved.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden PDF Container -->
+    <div id="pdfContainer" class="pdf-container">
+        <!-- PDF content will be generated here -->
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Add row functions
+        function addPaxRow() {
+            const tbody = document.querySelector('#paxTable tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            // Clear input values
+            newRow.querySelectorAll('input').forEach(input => {
+                if (input.type === 'checkbox') {
+                    input.checked = false;
+                } else {
+                    input.value = '';
+                }
+            });
+            tbody.appendChild(newRow);
+        }
+        
+        function addFlightRow() {
+            const tbody = document.querySelector('#flightTable tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            tbody.appendChild(newRow);
+        }
+        
+        function addAccommodationRow() {
+            const tbody = document.querySelector('#accommodationTable tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            tbody.appendChild(newRow);
+        }
+        
+        function removeRow(button) {
+            const row = button.closest('tr');
+            const tbody = row.parentNode;
+            if (tbody.rows.length > 1) {
+                row.remove();
+            } else {
+                alert('At least one row is required.');
+            }
+        }
+        
+        function previewVoucher() {
+            const voucherNo = document.getElementById('voucherNo').value;
+            const voucherDate = document.getElementById('voucherDate').value;
+            
+            if (!voucherNo || !voucherDate) {
+                alert('Please fill in Voucher No and Date');
+                return;
+            }
+            
+            // Update preview header
+            document.getElementById('previewVoucherNo').textContent = voucherNo;
+            document.getElementById('previewDate').textContent = new Date(voucherDate).toLocaleDateString();
+            
+            let previewHTML = '';
+            
+            // Pax Details
+            previewHTML += '<h5>Pax(es) Details</h5>';
+            previewHTML += '<table class="voucher-table"><thead><tr><th>Passport No.</th><th>Pax Name</th><th>With Bed</th><th>With Transport</th><th>With Ziarat</th><th>With Food</th></tr></thead><tbody>';
+            
+            const paxRows = document.querySelectorAll('#paxTable tbody tr');
+            paxRows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                if (inputs[0].value || inputs[1].value) {
+                    previewHTML += '<tr>';
+                    previewHTML += `<td>${inputs[0].value}</td>`;
+                    previewHTML += `<td>${inputs[1].value}</td>`;
+                    previewHTML += `<td>${inputs[2].checked ? '✓' : '×'}</td>`;
+                    previewHTML += `<td>${inputs[3].checked ? '✓' : '×'}</td>`;
+                    previewHTML += `<td>${inputs[4].checked ? '✓' : '×'}</td>`;
+                    previewHTML += `<td>${inputs[5].checked ? '✓' : '×'}</td>`;
+                    previewHTML += '</tr>';
+                }
+            });
+            previewHTML += '</tbody></table>';
+            
+            // Flight Details
+            previewHTML += '<h5 class="mt-4">Flight Details</h5>';
+            previewHTML += '<table class="voucher-table"><thead><tr><th>Airline</th><th>Flight No.</th><th>Sector</th><th>Flight Date</th><th>Departure</th><th>Arrival</th></tr></thead><tbody>';
+            
+            const flightRows = document.querySelectorAll('#flightTable tbody tr');
+            flightRows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                if (inputs[0].value || inputs[1].value) {
+                    previewHTML += '<tr>';
+                    previewHTML += `<td>${inputs[0].value}</td>`;
+                    previewHTML += `<td>${inputs[1].value}</td>`;
+                    previewHTML += `<td>${inputs[2].value}</td>`;
+                    previewHTML += `<td>${inputs[3].value}</td>`;
+                    previewHTML += `<td>${inputs[4].value}</td>`;
+                    previewHTML += `<td>${inputs[5].value}</td>`;
+                    previewHTML += '</tr>';
+                }
+            });
+            previewHTML += '</tbody></table>';
+            
+            // Accommodation Details
+            previewHTML += '<h5 class="mt-4">Accommodation Details</h5>';
+            previewHTML += '<table class="voucher-table"><thead><tr><th>City</th><th>Hotel Name</th><th>Confirmation</th><th>Check-In</th><th>Check-Out</th><th>Nights</th><th>Room</th></tr></thead><tbody>';
+            
+            const accommodationRows = document.querySelectorAll('#accommodationTable tbody tr');
+            accommodationRows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                if (inputs[0].value || inputs[1].value) {
+                    previewHTML += '<tr>';
+                    previewHTML += `<td>${inputs[0].value}</td>`;
+                    previewHTML += `<td>${inputs[1].value}</td>`;
+                    previewHTML += `<td>${inputs[2].value}</td>`;
+                    previewHTML += `<td>${inputs[3].value}</td>`;
+                    previewHTML += `<td>${inputs[4].value}</td>`;
+                    previewHTML += `<td>${inputs[5].value}</td>`;
+                    previewHTML += `<td>${inputs[6].value}</td>`;
+                    previewHTML += '</tr>';
+                }
+            });
+            previewHTML += '</tbody></table>';
+            
+            // Remarks
+            const remarks = document.getElementById('remarks').value;
+            if (remarks) {
+                previewHTML += '<h5 class="mt-4">Remarks</h5>';
+                previewHTML += `<p>${remarks}</p>`;
+            }
+            
+            document.getElementById('previewContent').innerHTML = previewHTML;
+            document.getElementById('voucherPreview').style.display = 'block';
+            
+            // Scroll to preview
+            document.getElementById('voucherPreview').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function downloadPDF() {
+            const voucherNo = document.getElementById('voucherNo').value;
+            const voucherDate = document.getElementById('voucherDate').value;
+            
+            if (!voucherNo || !voucherDate) {
+                alert('Please fill in Voucher No and Date first, then preview the voucher');
+                return;
+            }
+
+            // Create PDF content
+            let pdfHTML = `
+                <div class="pdf-header">
+                    <h1>AL ZAHID MADNI TRAVELS</h1>
+                </div>
+                <div class="pdf-info">
+                    <span>Voucher No: ${voucherNo}</span>
+                    <span>Date: ${new Date(voucherDate).toLocaleDateString()}</span>
+                </div>
+            `;
+
+            // Add Pax Details
+            pdfHTML += '<div class="pdf-section-title">Pax(es) Details</div>';
+            pdfHTML += '<table class="pdf-table"><thead><tr><th>Passport No.</th><th>Pax Name</th><th>With Bed</th><th>With Transport</th><th>With Ziarat</th><th>With Food</th></tr></thead><tbody>';
+            
+            const paxRows = document.querySelectorAll('#paxTable tbody tr');
+            let hasPaxData = false;
+            paxRows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                if (inputs[0].value || inputs[1].value) {
+                    hasPaxData = true;
+                    pdfHTML += '<tr>';
+                    pdfHTML += `<td>${inputs[0].value || '-'}</td>`;
+                    pdfHTML += `<td>${inputs[1].value || '-'}</td>`;
+                    pdfHTML += `<td>${inputs[2].checked ? '✓' : '×'}</td>`;
+                    pdfHTML += `<td>${inputs[3].checked ? '✓' : '×'}</td>`;
+                    pdfHTML += `<td>${inputs[4].checked ? '✓' : '×'}</td>`;
+                    pdfHTML += `<td>${inputs[5].checked ? '✓' : '×'}</td>`;
+                    pdfHTML += '</tr>';
+                }
+            });
+            if (!hasPaxData) {
+                pdfHTML += '<tr><td colspan="6">No passenger details entered</td></tr>';
+            }
+            pdfHTML += '</tbody></table>';
+
+            // Add Flight Details
+            pdfHTML += '<div class="pdf-section-title">Flight Details</div>';
+            pdfHTML += '<table class="pdf-table"><thead><tr><th>Airline</th><th>Flight No.</th><th>Sector</th><th>Flight Date</th><th>Departure</th><th>Arrival</th></tr></thead><tbody>';
+            
+            const flightRows = document.querySelectorAll('#flightTable tbody tr');
+            let hasFlightData = false;
+            flightRows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                if (inputs[0].value || inputs[1].value) {
+                    hasFlightData = true;
+                    pdfHTML += '<tr>';
+                    pdfHTML += `<td>${inputs[0].value || '-'}</td>`;
+                    pdfHTML += `<td>${inputs[1].value || '-'}</td>`;
+                    pdfHTML += `<td>${inputs[2].value || '-'}</td>`;
+                    pdfHTML += `<td>${inputs[3].value || '-'}</td>`;
+                    pdfHTML += `<td>${inputs[4].value || '-'}</td>`;
+                    pdfHTML += `<td>${inputs[5].value || '-'}</td>`;
+                    pdfHTML += '</tr>';
+                }
+            });
+            if (!hasFlightData) {
+                pdfHTML += '<tr><td colspan="6">No flight details entered</td></tr>';
+            }
+            pdfHTML += '</tbody></table>';
+
+            // Add Accommodation Details
+            pdfHTML += '<div class="pdf-section-title">Accommodation Details</div>';
+            pdfHTML += '<table class="pdf-table"><thead><tr><th>City</th><th>Hotel Name</th><th>Confirmation</th><th>Check-In</th><th>Check-Out</th><th>Nights</th><th>Room</th></tr></thead><tbody>';
+            
+            const accommodationRows = document.querySelectorAll('#accommodationTable tbody tr');
+            let hasAccommodationData = false;
+            accommodationRows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                if (inputs[0].value || inputs[1].value) {
+                    hasAccommodationData = true;
+                    pdfHTML += '<tr>';
+                    pdfHTML += `<td>${inputs[0].value || '-'}</td>`;
+                    pdfHTML += `<td>${inputs[1].value || '-'}</td>`;
+                    pdfHTML += `<td>${inputs[2].value || '-'}</td>`;
+                    pdfHTML += `<td>${inputs[3].value || '-'}</td>`;
+                    pdfHTML += `<td>${inputs[4].value || '-'}</td>`;
+                    pdfHTML += `<td>${inputs[5].value || '-'}</td>`;
+                    pdfHTML += `<td>${inputs[6].value || '-'}</td>`;
+                    pdfHTML += '</tr>';
+                }
+            });
+            if (!hasAccommodationData) {
+                pdfHTML += '<tr><td colspan="7">No accommodation details entered</td></tr>';
+            }
+            pdfHTML += '</tbody></table>';
+
+            // Add Remarks
+            const remarks = document.getElementById('remarks').value;
+            if (remarks) {
+                pdfHTML += '<div class="pdf-section-title">Remarks</div>';
+                pdfHTML += `<p>${remarks}</p>`;
+            }
+
+            // Add Terms and Conditions
+            pdfHTML += '<div class="pdf-section-title">Terms and Conditions</div>';
+            pdfHTML += `<ol style="font-size: 9px; line-height: 1.3;">
+                <li>I will abide by the details of this agreement as per the requirements, guidance, and regulations of the Ministry of Hajj & Umrah of the KSA.</li>
+                <li>In the event of my non-compliance with this package and should I overstay, I submit myself to the laid-down procedure of KSA.</li>
+                <li>In case of emergency, I shall report the matter to the service provider whose address in Makkah, Madinah, and Jeddah has been known to me.</li>
+                <li>That I will depart the Kingdom on completion of my package as per program & visa and will not overstay under any circumstances.</li>
+                <li>That I will not take up employment with or without pay.</li>
+                <li>It is not permitted for anyone to sleep or camp (with or without luggage) around the Holy sites; anyone apprehended by MOH will have to pay the fine and cost of accommodation. MOH will then release the passport.</li>
+                <li>Children under 10 years will share a bed with parents.</li>
+                <li>The company will not be held responsible for any service that is not mentioned on the voucher.</li>
+            </ol>`;
+
+            // Add Footer
+            pdfHTML += `
+                <div class="pdf-footer">
+                    <p><strong>Received By ____________________</strong></p>
+                    <small>Copyright © 2025. All rights reserved.</small>
+                </div>
+            `;
+
+            // Set the PDF container content
+            const pdfContainer = document.getElementById('pdfContainer');
+            pdfContainer.innerHTML = pdfHTML;
+            pdfContainer.style.display = 'block';
+
+            // Generate PDF using html2canvas and jsPDF
+            html2canvas(pdfContainer, {
+                scale: 2,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: '#ffffff',
+                width: 794,
+                height: 1123
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                
+                const imgWidth = 210;
+                const pageHeight = 295;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 0;
+
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+
+                pdf.save(`Al_Zahid_Madni_Travels_Voucher_${voucherNo}.pdf`);
+                
+                // Hide the PDF container
+                pdfContainer.style.display = 'none';
+            }).catch(error => {
+                console.error('PDF generation failed:', error);
+                alert('PDF generation failed. Please try again.');
+                pdfContainer.style.display = 'none';
+            });
+        }
+        
+        // Set today's date as default
+        document.getElementById('voucherDate').valueAsDate = new Date();
+    </script>
+</body>
+</html>
