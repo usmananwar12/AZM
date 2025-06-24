@@ -13,192 +13,109 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Al Zahid Madni Travels (Pvt) Ltd.</title>
+    <title>Al Zahid Madni Travels - Admin Portal</title>
     <link rel="icon" href="pics/logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <script defer src="nav.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <header>
-        <nav>
-            <div class="left">
-                <img src="pics/logo.png" alt="Logo" class="logo">
-                <span class="company-name">Al Zahid Madni Travels (Pvt) Ltd.</span>
-            </div>
-            <div class="right nav-buttons">
-                <button class="nav-btn" data-page="home">Home</button>
-                <button class="nav-btn" data-page="about-us">About Us</button>
-                <button class="nav-btn" data-page="gallery">Gallery</button>
-                <button class="nav-btn" data-page="services">Services</button>
-            </div>
-        </nav>
-    </header>
+    <!-- Landing Page -->
+    <div id="landingPage">
+        <header>
+            <nav>
+                <div class="left">
+                    <img src="pics/logo.png" alt="Logo" class="logo">
+                    <span class="company-name">Al Zahid Madni Travels - Admin Portal</span>
+                </div>
+            </nav>
+        </header>
 
-    <!-- Pages -->
-    <main>
-        <div id="home-page" class="page">
-            <section class="firstSection">
-                <div class="hero-wrapper">
-                    <div class="leftSection">
-                        <h1>Welcome to Al Zahid Madni Travels</h1>
-                        <p>Your Trusted Partner for Spiritual Journeys Since 2006</p>
-                        <span id="element"></span>
-                        <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
-                        <script>
-                            var typed = new Typed('#element', {
-                                strings: ['<strong>Hajj</strong> packages.', '<strong>Umrah</strong> packages.', '<strong>Visas</strong>', 'and worldwide <strong>airline tickets</strong>.'],
-                                typeSpeed: 50,
-                                backSpeed: 30,
-                                backDelay: 1000,
-                                startDelay: 500,
-                                loop: true,
-                            });
-                        </script>
+        <main>
+            <div class="admin-container">
+                <!-- Welcome Section -->
+                <div class="welcome-section">
+                    <h1>Admin Portal</h1>
+                    <p>Welcome to the Al Zahid Madni Travels administrative dashboard. Access your voucher generator and management tools.</p>
+                    
+                    <div class="customer-notice">
+                        <h3><i class="fas fa-info-circle"></i> Are you a customer?</h3>
+                        <p>This is the admin portal. For booking Hajj, Umrah packages, and airline tickets, please visit our main website.</p>
+                        <a href="https://www.alzahidmadni.com/" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> Visit alzahidmadni.com
+                        </a>
                     </div>
-                    <div class="rightSection">
-                        <img src="pics/kabah.jpg" alt="Ka'bah" class="kabah">
+
+                    <h3 style="color: #2c3e50; margin-bottom: 1rem;">Admin Features:</h3>
+                    <ul class="features-list">
+                        <li><i class="fas fa-file-invoice"></i> Voucher Generator</li>
+                        <li><i class="fas fa-users"></i> Passenger Management</li>
+                        <li><i class="fas fa-download"></i> PDF Export</li>
+                    </ul>
+                </div>
+
+                <!-- Login Section -->
+                <div class="login-section">
+                    <div class="login-card">
+                        <h2 class="login-title">Admin Login</h2>
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" id="username" class="form-control" placeholder="Enter username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" class="form-control" placeholder="Enter password" required>
+                            </div>
+                            <button type="submit" class="login-btn">
+                                <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+                            </button>
+                            <div id="errorMessage" class="error-message">
+                                Invalid username or password. Please try again.
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="announcement-container">
-                    <h2>Updated Al Zahid Madni Travels Website live now!</h2>
-                    <p>
-                        We are excited to announce that our we launched an updated website at alzahidmadni.com!
-                    </p>
-                    <a href="https://www.alzahidmadni.com/">Click Here to Visit</a>
-                </div>
-
-            </section>
-        </div>
-
-        <div id="about-us-page" class="page hidden">
-            <h1>About Us</h1>
-            <p>Al Zahid Madni Travels Pvt Limited, established in 2006, is your trusted partner for Hajj, Umrah, and
-                travel services. With a commitment to providing seamless and spiritually enriching experiences, we
-                specialize in carefully crafted Umrah packages and personalized travel solutions. Our dedicated guides
-                accompany pilgrims throughout their journey, ensuring comfort and convenience at every step. Whether
-                planning your spiritual pilgrimage or arranging your travel needs, Al Zahid Madni Travels is here to
-                make your journey memorable and stress-free.</p>
-
-            <ul>
-                <li>
-                    <strong>IATA Certified Member</strong>
-                    <p>We are a certified member of the International Air Transport Association (IATA).</p>
-                    <strong>IATA Certificate:</strong>
-                    <img src="pics/iata.png" alt="IATA Certificate" class="certificate-img">
-                </li>
-                <li>
-                    <strong>Department of Tourism Services (DTS)</strong>
-                    <p>Al Zahid Madni Travels Pvt Limited is proud to hold a valid license from the Department of
-                        Tourism Services (DTS), signifying our compliance with the highest standards in the travel and
-                        tourism industry.</p>
-                    <img src="pics/dts.jpg" alt="DTS License" class="certificate-img">
-                </li>
-
-                <li>
-                    <strong>HOAP Member</strong>
-                    <p>We are a proud member of the <strong>Hajj Organizer Association of Pakistan (HOAP)</strong>,
-                        enrollment number: <strong>3199/L</strong>.</p>
-                    <p>Check our profile on the official HOAP website:</p>
-                    <a href="https://hoap.org.pk/Website/Profile?Enroll_No=3199%2FL" target="_blank"
-                        class="external-link">HOAP Profile</a>
-                </li>
-                <li>
-                    <strong>TAAP Member</strong>
-                    <p>We are an active member of the <strong>Travel Agent Association of Pakistan (TAAP)</strong>,
-                        dedicated to providing reliable travel services.</p>
-                </li>
-            </ul>
-        </div>
-
-
-        <div id="gallery-page" class="page hidden">
-
-            <!-- Awards Section -->
-            <section class="gallery-section">
-                <h2>Awards</h2>
-                <div class="gallery-item">
-                    <img src="pics/pic1.jpg" alt="Appreciation Shield" class="gallery-img">
-                    <p class="caption">
-                        Moalam, Ustad Ashraf Jameel Matoof, of Ithraa Alkhair honors our director with an appreciation
-                        shield for successful Hajj operation 2024.
-                    </p>
-                </div>
-                <div class="gallery-item">
-                    <img src="pics/pic2.jpg" alt="Best Services Award" class="gallery-img">
-                    <p class="caption">
-                        Best Services Award was presented to Al Zahid Madni Travels Pvt Ltd for Hajj 2024 by Rawaf Mina
-                        (Category B, Zone 2).
-                    </p>
-                </div>
-            </section>
-
-            <!-- Hajj 2024 Section -->
-            <section class="gallery-section">
-                <h2>Hajj 2024</h2>
-                <div class="gallery-item">
-                    <img src="pics/pic3.jpg" alt="Hujjaj in Madinah" class="gallery-img">
-                    <p class="caption">
-                        Hujjaj taking a group photo with the Director of Al Zahid Madni Travels in Haram, Madinah.
-                    </p>
-                </div>
-                <div class="gallery-item">
-                    <img src="pics/pic4.jpg" alt="Hujjaj in Arafat" class="gallery-img">
-                    <p class="caption">
-                        Hujjaj of Al Zahid Madni Travels in Arafat during Hajj 2024.
-                    </p>
-                </div>
-            </section>
-        </div>
-        <div id="services-page" class="page hidden">
-            <h1>Our Services</h1>
-
-            <!-- Hajj 2025 -->
-            <div class="service-item" onclick="window.location.href='hajj-2025.html'">
-                <img src="pics/hajj.jpg" alt="Hajj 2025" class="service-img">
-                <h2>Hajj 2025</h2>
             </div>
+        </main>
 
-            <!-- Umrah -->
-            <div class="service-item" onclick="window.location.href='umrah.html'">
-                <img src="pics/umrah.jpg" alt="Umrah" class="service-img">
-                <h2>Umrah</h2>
-            </div>
-
-            <!-- Airline Tickets -->
-            <div class="service-item" onclick="window.location.href='airline.html'">
-                <img src="pics/ticketing.png" alt="Airline Tickets" class="service-img">
-                <h2>Airline Tickets</h2>
-            </div>
-        </div>
-
-
-        </div>
-    </main>
-    <footer>
-        <div class="footer-container">
+        <footer>
             <div class="footer-content">
-                <p>Contact: 0300-9666476 | 0306-1166416 | 0321-6527086</p>
-                <p>Email: alzahidmadni@hotmail.com</p>
-                <p>Address: Ground Floor, business Center, Regency Road, New Civil Lines, Faisalabads</p>
+                <p>Contact: 0300-9666476 | Email: info@alzahidmadni.com</p>
+                <p>Address: Ground Floor, Business Center, Regency Road, New Civil Lines, Faisalabad</p>
                 <div class="social-icons">
-                    <a href="https://www.facebook.com/share/1BZEbugM1t/?mibextid=wwXIfr" target="_blank"><i
-                            class="fab fa-facebook-f"></i></a>
-                    <a href="https://instagram.com/alzahidmadni" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://youtube.com/@alzahidmadni" target="_blank"><i class="fab fa-youtube"></i></a>
-                    <a href="https://maps.app.goo.gl/nCuMTaeuqYHq9SRR8?g_st=com.google.maps.preview.copy"
-                        target="_blank">
+                    <a href="https://www.facebook.com/share/1BZEbugM1t/?mibextid=wwXIfr" target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://instagram.com/alzahidmadni" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://youtube.com/@alzahidmadni" target="_blank">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://maps.app.goo.gl/nCuMTaeuqYHq9SRR8?g_st=com.google.maps.preview.copy" target="_blank">
                         <i class="fas fa-map-marker-alt"></i>
                     </a>
                 </div>
             </div>
             <p class="copyright">&copy; 2025 Al Zahid Madni Travels Pvt Limited. All rights reserved.</p>
-        </div>
-    </footer>
+        </footer>
+    </div>
+
+    <!-- Main App (Hidden initially) -->
+    <div id="mainApp" class="main-app">
+        <!-- This will be loaded from voucher/index.html content -->
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="script.js"></script>
 </body>
 
 </html>
