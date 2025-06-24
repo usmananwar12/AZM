@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Al Zahid Madni Travels - Voucher Generator</title>
+    <title>Al Zahid Madni Travels (PVT) Ltd. - Voucher Generator</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../pics/logo.png">
+    <link rel="shortcut icon" href="../pics/logo.png">
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -36,16 +40,23 @@
             text-align: center;
         }
         
-        .logo-placeholder {
+        .company-logo {
             width: 80px;
             height: 80px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
             margin: 0 auto 15px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+        }
+        
+        .company-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
         }
         
         .form-section {
@@ -127,6 +138,13 @@
             border-bottom: 2px solid #3498db;
         }
         
+        .voucher-header .preview-logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            display: block;
+        }
+        
         .voucher-table {
             width: 100%;
             margin-bottom: 20px;
@@ -164,7 +182,7 @@
             color: #555;
         }
 
-        /* PDF Print Container - Hidden by default */
+        /* PDF-specific styles */
         .pdf-container {
             display: none;
             position: absolute;
@@ -187,8 +205,15 @@
             border-bottom: 2px solid #000;
         }
 
+        .pdf-container .pdf-header .pdf-logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 10px;
+            display: block;
+        }
+
         .pdf-container .pdf-header h1 {
-            font-size: 24px;
+            font-size: 20px;
             margin: 0;
             font-weight: bold;
         }
@@ -258,10 +283,13 @@
         <div class="main-container">
             <!-- Header Section -->
             <div class="header-section">
-                <div class="logo-placeholder">
-                    <i class="fas fa-plane"></i>
+                <div class="company-logo">
+                    <img src="../pics/logo.png" alt="Al Zahid Madni Travels Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div style="display: none; width: 100%; height: 100%; align-items: center; justify-content: center; font-size: 24px;">
+                        <i class="fas fa-plane"></i>
+                    </div>
                 </div>
-                <h1 class="mb-0">Al Zahid Madni Travels</h1>
+                <h1 class="mb-0">Al Zahid Madni Travels (PVT) Ltd.</h1>
                 <p class="mb-0 mt-2">Voucher Generator</p>
             </div>
             
@@ -418,7 +446,8 @@
                 <!-- Voucher Preview -->
                 <div id="voucherPreview" class="voucher-preview">
                     <div class="voucher-header">
-                        <h2>AL ZAHID MADNI TRAVELS</h2>
+                        <img src="../pics/logo.png" alt="Company Logo" class="preview-logo" onerror="this.style.display='none';">
+                        <h2>AL ZAHID MADNI TRAVELS (PVT) LTD.</h2>
                         <div class="row mt-3">
                             <div class="col-6">
                                 <strong>Voucher No: <span id="previewVoucherNo"></span></strong>
@@ -589,10 +618,11 @@
                 return;
             }
 
-            // Create PDF content
+            // Create PDF content with logo
             let pdfHTML = `
                 <div class="pdf-header">
-                    <h1>AL ZAHID MADNI TRAVELS</h1>
+                    <img src="../pics/logo.png" alt="Company Logo" class="pdf-logo" onerror="this.style.display='none';">
+                    <h1>AL ZAHID MADNI TRAVELS (PVT) LTD.</h1>
                 </div>
                 <div class="pdf-info">
                     <span>Voucher No: ${voucherNo}</span>
