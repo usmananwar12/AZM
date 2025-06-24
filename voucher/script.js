@@ -4,7 +4,7 @@
             const isLoggedIn = sessionStorage.getItem('isLoggedIn');
             if (isLoggedIn !== 'true') {
                 // Redirect to main page if not logged in
-                window.location.href = '../index.html';
+                window.location.href = '../';
                 return;
             }
             // Set today's date as default
@@ -14,7 +14,7 @@
         // Logout function
         function logout() {
             sessionStorage.removeItem('isLoggedIn');
-            window.location.href = '../index.html';
+            window.location.href = '../';
         }
         
         // Initialize authentication check on page load

@@ -23,7 +23,7 @@
             if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
                 sessionStorage.setItem('isLoggedIn', 'true');
                 // Redirect to voucher page
-                window.location.href = 'voucher/index.html';
+                window.location.href = 'voucher/';
             } else {
                 errorMessage.style.display = 'block';
                 // Clear password field
