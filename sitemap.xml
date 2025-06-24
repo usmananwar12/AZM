@@ -1,29 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
 <url>
-  <loc>https://alzahidmadni.store/</loc>
-  <lastmod>2025-02-08T10:21:34+00:00</lastmod>
-  <priority>1.00</priority>
+<loc>https://alzahidmadni.store/</loc>
+<lastmod>2025-06-24T21:18:16+00:00</lastmod>
 </url>
-<url>
-  <loc>https://alzahidmadni.store/hajj-2025.html</loc>
-  <lastmod>2025-02-08T10:21:34+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://alzahidmadni.store/umrah.html</loc>
-  <lastmod>2025-02-08T10:21:34+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://alzahidmadni.store/airline.html</loc>
-  <lastmod>2025-02-08T10:21:34+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-
 </urlset>
