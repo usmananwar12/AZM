@@ -8,7 +8,7 @@
             const isLoggedIn = sessionStorage.getItem('isLoggedIn');
             if (isLoggedIn === 'true') {
                 // Redirect to voucher page
-                window.location.href = 'voucher/index.html';
+                window.location.href = 'voucher/';
             }
         }
         
