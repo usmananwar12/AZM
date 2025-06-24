@@ -252,10 +252,15 @@
         }
 
         .pdf-container .pdf-footer {
-            text-align: center;
             margin-top: 30px;
             padding-top: 15px;
             border-top: 1px solid #000;
+        }
+
+        .pdf-container .pdf-footer > div {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
         }
         
         @media (max-width: 768px) {
@@ -726,11 +731,20 @@
                 <li>The company will not be held responsible for any service that is not mentioned on the voucher.</li>
             </ol>`;
 
-            // Add Footer
+            // Add Footer with contact information
             pdfHTML += `
                 <div class="pdf-footer">
-                    <p><strong>Received By ____________________</strong></p>
-                    <small>Copyright © 2025. All rights reserved.</small>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <p><strong>Received By ____________________</strong></p>
+                            <small>Copyright © 2025. All rights reserved.</small>
+                        </div>
+                        <div style="text-align: right; font-size: 9px; line-height: 1.2;">
+                            <div><strong>Ph#:</strong> 0300-9666476</div>
+                            <div><strong>Email:</strong> info@alzahidmadni.com</div>
+                            <div><strong>Website:</strong> alzahidmadni.com</div>
+                        </div>
+                    </div>
                 </div>
             `;
 
