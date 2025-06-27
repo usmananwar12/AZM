@@ -129,6 +129,7 @@
                                     <tr>
                                         <th>City</th>
                                         <th>Hotel Name</th>
+                                        <th>Confirmation Number</th>
                                         <th>Check-in</th>
                                         <th>Check-out</th>
                                         <th>Nights</th>
@@ -140,6 +141,7 @@
                                     <tr>
                                         <td><input type="text" class="form-control form-control-sm" name="city"></td>
                                         <td><input type="text" class="form-control form-control-sm" name="hotelName"></td>
+                                        <td><input type="text" class="form-control form-control-sm" name="confirmationNumber"></td>
                                         <td><input type="date" class="form-control form-control-sm" name="checkin"></td>
                                         <td><input type="date" class="form-control form-control-sm" name="checkout"></td>
                                         <td><input type="number" class="form-control form-control-sm" name="nights"></td>
@@ -150,6 +152,30 @@
                             </table>
                         </div>
                         <button type="button" class="btn btn-sm btn-outline-primary" onclick="addAccommodationRow()">Add Accommodation</button>
+                    </div>
+                    
+                    <!-- Contact Details -->
+                    <div class="form-card">
+                        <h4 class="section-title">Contact Details</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="contactTable">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Contact Number</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" class="form-control form-control-sm" name="contactName"></td>
+                                        <td><input type="text" class="form-control form-control-sm" name="contactNumber"></td>
+                                        <td><button type="button" class="btn btn-sm btn-danger" onclick="removeRow(this)">Remove</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="addContactRow()">Add Contact</button>
                     </div>
                     
                     <!-- Remarks -->

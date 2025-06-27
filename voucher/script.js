@@ -1,4 +1,3 @@
-
         // Check authentication on page load
         function checkAuth() {
             const isLoggedIn = sessionStorage.getItem('isLoggedIn');
@@ -44,6 +43,13 @@
         
         function addAccommodationRow() {
             const tbody = document.querySelector('#accommodationTable tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            tbody.appendChild(newRow);
+        }
+        
+        function addContactRow() {
+            const tbody = document.querySelector('#contactTable tbody');
             const newRow = tbody.rows[0].cloneNode(true);
             newRow.querySelectorAll('input').forEach(input => input.value = '');
             tbody.appendChild(newRow);
@@ -116,7 +122,7 @@
             
             // Accommodation Details
             previewHTML += '<h5 class="mt-4">Accommodation Details</h5>';
-            previewHTML += '<table class="voucher-table"><thead><tr><th>City</th><th>Hotel Name</th><th>Check-In</th><th>Check-Out</th><th>Nights</th><th>Room</th></tr></thead><tbody>';
+            previewHTML += '<table class="voucher-table"><thead><tr><th>City</th><th>Hotel Name</th><th>Confirmation Number</th><th>Check-In</th><th>Check-Out</th><th>Nights</th><th>Room</th></tr></thead><tbody>';
             
             const accommodationRows = document.querySelectorAll('#accommodationTable tbody tr');
             accommodationRows.forEach(row => {
@@ -129,9 +135,30 @@
                     previewHTML += `<td>${inputs[3].value}</td>`;
                     previewHTML += `<td>${inputs[4].value}</td>`;
                     previewHTML += `<td>${inputs[5].value}</td>`;
+                    previewHTML += `<td>${inputs[6].value}</td>`;
                     previewHTML += '</tr>';
                 }
             });
+            previewHTML += '</tbody></table>';
+            
+            // Contact Details
+            previewHTML += '<h5 class="mt-4">Contact Details</h5>';
+            previewHTML += '<table class="voucher-table"><thead><tr><th>Name</th><th>Contact Number</th></tr></thead><tbody>';
+            const contactRows = document.querySelectorAll('#contactTable tbody tr');
+            let hasContactData = false;
+            contactRows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                if (inputs[0].value || inputs[1].value) {
+                    hasContactData = true;
+                    previewHTML += '<tr>';
+                    previewHTML += `<td>${inputs[0].value}</td>`;
+                    previewHTML += `<td>${inputs[1].value}</td>`;
+                    previewHTML += '</tr>';
+                }
+            });
+            if (!hasContactData) {
+                previewHTML += '<tr><td colspan="2">No contact details entered</td></tr>';
+            }
             previewHTML += '</tbody></table>';
             
             // Remarks
@@ -221,7 +248,7 @@
 
             // Add Accommodation Details
             pdfHTML += '<div class="pdf-section-title">Accommodation Details</div>';
-            pdfHTML += '<table class="pdf-table"><thead><tr><th>City</th><th>Hotel Name</th><th>Check-In</th><th>Check-Out</th><th>Nights</th><th>Room</th></tr></thead><tbody>';
+            pdfHTML += '<table class="pdf-table"><thead><tr><th>City</th><th>Hotel Name</th><th>Confirmation Number</th><th>Check-In</th><th>Check-Out</th><th>Nights</th><th>Room</th></tr></thead><tbody>';
             
             const accommodationRows = document.querySelectorAll('#accommodationTable tbody tr');
             let hasAccommodationData = false;
@@ -236,11 +263,32 @@
                     pdfHTML += `<td>${inputs[3].value || '-'}</td>`;
                     pdfHTML += `<td>${inputs[4].value || '-'}</td>`;
                     pdfHTML += `<td>${inputs[5].value || '-'}</td>`;
+                    pdfHTML += `<td>${inputs[6].value || '-'}</td>`;
                     pdfHTML += '</tr>';
                 }
             });
             if (!hasAccommodationData) {
-                pdfHTML += '<tr><td colspan="6">No accommodation details entered</td></tr>';
+                pdfHTML += '<tr><td colspan="7">No accommodation details entered</td></tr>';
+            }
+            pdfHTML += '</tbody></table>';
+
+            // Add Contact Details
+            pdfHTML += '<div class="pdf-section-title">Contact Details</div>';
+            pdfHTML += '<table class="pdf-table"><thead><tr><th>Name</th><th>Contact Number</th></tr></thead><tbody>';
+            const contactRows = document.querySelectorAll('#contactTable tbody tr');
+            let hasContactData = false;
+            contactRows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                if (inputs[0].value || inputs[1].value) {
+                    hasContactData = true;
+                    pdfHTML += '<tr>';
+                    pdfHTML += `<td>${inputs[0].value || '-'}</td>`;
+                    pdfHTML += `<td>${inputs[1].value || '-'}</td>`;
+                    pdfHTML += '</tr>';
+                }
+            });
+            if (!hasContactData) {
+                pdfHTML += '<tr><td colspan="2">No contact details entered</td></tr>';
             }
             pdfHTML += '</tbody></table>';
 
