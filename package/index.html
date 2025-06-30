@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Package Creator - Al Zahid Madni Travels</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../pics/logo.png">
+    <link rel="shortcut icon" href="../pics/logo.png">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- jsPDF library for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+        
+        .main-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+        
+        .header-section {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px 12px 0 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+        
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+        
+        .company-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .company-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+        
+        .form-section {
+            padding: 30px;
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #27ae60;
+        }
+        
+        .form-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .table-responsive {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .table th {
+            background-color: #27ae60;
+            color: white;
+            font-weight: 500;
+            border: none;
+            padding: 12px 8px;
+            font-size: 14px;
+        }
+        
+        .table td {
+            padding: 10px 8px;
+            vertical-align: middle;
+            border-color: #dee2e6;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 500;
+            border-radius: 6px;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 500;
+            border-radius: 6px;
+            color: white;
+        }
+        
+        .cost-summary {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .cost-summary h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .cost-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cost-item {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .cost-item h5 {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .cost-item .amount {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .total-cost {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .price-input {
+            transition: all 0.3s ease;
+        }
+        
+        .price-input:disabled {
+            background-color: #e9ecef;
+            opacity: 0.6;
+        }
+        
+        /* PDF-specific styles */
+        .pdf-container {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            padding: 20mm;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            color: #000;
+        }
+
+        .pdf-container .pdf-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #27ae60;
+        }
+
+        .pdf-container .pdf-header .pdf-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            display: block;
+        }
+
+        .pdf-container .pdf-header h1 {
+            font-size: 24px;
+            margin: 0 0 10px 0;
+            font-weight: bold;
+            color: #27ae60;
+        }
+
+        .pdf-container .pdf-header h2 {
+            font-size: 18px;
+            margin: 0;
+            color: #2c3e50;
+        }
+
+        .pdf-container .package-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            font-weight: bold;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .pdf-container .pdf-section {
+            margin-bottom: 25px;
+        }
+
+        .pdf-container .pdf-section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0 0 15px 0;
+            color: #27ae60;
+            border-bottom: 2px solid #27ae60;
+            padding-bottom: 5px;
+        }
+
+        .pdf-container .pdf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .pdf-container .pdf-table th,
+        .pdf-container .pdf-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            font-size: 11px;
+        }
+
+        .pdf-container .pdf-table th {
+            background-color: #27ae60;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .pdf-container .included-item {
+            background: #e8f5e8;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .pdf-container .not-included-item {
+            background: #fff3cd;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .pdf-container .total-section {
+            background: linear-gradient(135deg, #27ae60, #229954);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .pdf-container .total-section h3 {
+            font-size: 20px;
+            margin: 0 0 10px 0;
+        }
+
+        .pdf-container .total-amount {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .pdf-container .pdf-footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #27ae60;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 10px;
+                border-radius: 8px;
+            }
+            
+            .header-section {
+                padding: 20px;
+            }
+            
+            .form-section {
+                padding: 20px;
+            }
+            
+            .table-responsive {
+                font-size: 12px;
+            }
+            
+            .back-btn,
+            .logout-btn {
+                position: static;
+                margin-bottom: 20px;
+            }
+            
+            .cost-breakdown {
+                grid-template-columns: 1fr;
+            }
+            
+            .total-cost {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Application -->
+    <div class="container-fluid">
+        <div class="main-container" id="mainApp">
+            <!-- Header Section -->
+            <div class="header-section">
+                <a href="../dashboard/index.html" class="back-btn">
+                    <i class="fas fa-arrow-left me-1"></i>Back to Dashboard
+                </a>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt me-1"></i>Logout
+                </button>
+                <div class="company-logo">
+                    <img src="../pics/logo.png" alt="Al Zahid Madni Travels Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div style="display: none; width: 100%; height: 100%; align-items: center; justify-content: center; font-size: 24px;">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                </div>
+                <h1 class="mb-0">Al Zahid Madni Travels (PVT) Ltd.</h1>
+                <p class="mb-0 mt-2">Package Creator</p>
+            </div>
+            
+            <!-- Form Section -->
+            <div class="form-section">
+                <form id="packageForm">
+                    <!-- Package Info -->
+                    <div class="form-card">
+                        <h4 class="section-title">Package Information</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Package Name</label>
+                                <input type="text" class="form-control" id="packageName" required placeholder="e.g., Umrah Premium Package">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Package Duration</label>
+                                <input type="text" class="form-control" id="packageDuration" required placeholder="e.g., 15 Days">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label class="form-label">Package Description</label>
+                                <textarea class="form-control" id="packageDescription" rows="3" placeholder="Brief description of the package..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Accommodation Details -->
+                    <div class="form-card">
+                        <h4 class="section-title">Accommodation</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="accommodationTable">
+                                <thead>
+                                    <tr>
+                                        <th>City</th>
+                                        <th>Hotel Name</th>
+                                        <th>Price per Night (PKR)</th>
+                                        <th>Nights</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" class="form-control form-control-sm" name="city" placeholder="e.g., Makkah"></td>
+                                        <td><input type="text" class="form-control form-control-sm" name="hotelName" placeholder="e.g., Hilton Suites"></td>
+                                        <td><input type="number" class="form-control form-control-sm price-input" name="price" placeholder="0" oninput="calculateTotal()"></td>
+                                        <td><input type="number" class="form-control form-control-sm" name="nights" placeholder="0"></td>
+                                        <td><button type="button" class="btn btn-sm btn-danger" onclick="removeRow(this)">Remove</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="addAccommodationRow()">Add Accommodation</button>
+                    </div>
+                    
+                    <!-- Visa Details -->
+                    <div class="form-card">
+                        <h4 class="section-title">Visa</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="checkbox-wrapper">
+                                    <input type="checkbox" class="form-check-input" id="visaIncluded" onchange="toggleVisaPrice()">
+                                    <label class="form-check-label" for="visaIncluded">
+                                        <strong>Visa Included in Package</strong>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Visa Price (PKR)</label>
+                                <input type="number" class="form-control price-input" id="visaPrice" placeholder="0" disabled oninput="calculateTotal()">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Transport Details -->
+                    <div class="form-card">
+                        <h4 class="section-title">Transport</h4>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="form-label">Transport Type</label>
+                                <select class="form-select" id="transportType">
+                                    <option value="">Select Transport</option>
+                                    <option value="Bus">Bus</option>
+                                    <option value="Car">Car</option>
+                                    <option value="Van">Van</option>
+                                    <option value="Taxi">Taxi</option>
+                                    <option value="Private Vehicle">Private Vehicle</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="checkbox-wrapper mt-4">
+                                    <input type="checkbox" class="form-check-input" id="transportIncluded" onchange="toggleTransportPrice()">
+                                    <label class="form-check-label" for="transportIncluded">
+                                        <strong>Transport Included</strong>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Transport Price (PKR)</label>
+                                <input type="number" class="form-control price-input" id="transportPrice" placeholder="0" disabled oninput="calculateTotal()">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Airline Tickets -->
+                    <div class="form-card">
+                        <h4 class="section-title">Airline Tickets</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="airlineTable">
+                                <thead>
+                                    <tr>
+                                        <th>Airline Name</th>
+                                        <th>Sector</th>
+                                        <th>Date</th>
+                                        <th>Timing</th>
+                                        <th>Price (PKR)</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" class="form-control form-control-sm" name="airlineName" placeholder="e.g., PIA"></td>
+                                        <td><input type="text" class="form-control form-control-sm" name="sector" placeholder="e.g., KHI-JED"></td>
+                                        <td><input type="date" class="form-control form-control-sm" name="flightDate"></td>
+                                        <td><input type="time" class="form-control form-control-sm" name="timing"></td>
+                                        <td><input type="number" class="form-control form-control-sm price-input" name="ticketPrice" placeholder="0" oninput="calculateTotal()"></td>
+                                        <td><button type="button" class="btn btn-sm btn-danger" onclick="removeRow(this)">Remove</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="addAirlineRow()">Add Flight</button>
+                    </div>
+                    
+                    <!-- Cost Summary -->
+                    <div class="cost-summary">
+                        <h3><i class="fas fa-calculator"></i> Package Cost Summary</h3>
+                        <div class="cost-breakdown">
+                            <div class="cost-item">
+                                <h5>Accommodation</h5>
+                                <div class="amount">PKR <span id="accommodationTotal">0</span></div>
+                            </div>
+                            <div class="cost-item">
+                                <h5>Visa</h5>
+                                <div class="amount">PKR <span id="visaTotal">0</span></div>
+                            </div>
+                            <div class="cost-item">
+                                <h5>Transport</h5>
+                                <div class="amount">PKR <span id="transportTotal">0</span></div>
+                            </div>
+                            <div class="cost-item">
+                                <h5>Airline Tickets</h5>
+                                <div class="amount">PKR <span id="airlineTotal">0</span></div>
+                            </div>
+                        </div>
+                        <div class="total-cost">
+                            Total Package Price: PKR <span id="grandTotal">0</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="text-center">
+                        <button type="button" class="btn btn-warning me-3" onclick="savePackage()">
+                            <i class="fas fa-save me-2"></i>Save Package
+                        </button>
+                        <button type="button" class="btn btn-primary me-3" onclick="previewPackage()">
+                            <i class="fas fa-eye me-2"></i>Preview Package
+                        </button>
+                        <button type="button" class="btn btn-success" onclick="downloadPackagePDF()">
+                            <i class="fas fa-download me-2"></i>Download PDF
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden PDF Container -->
+    <div id="pdfContainer" class="pdf-container">
+        <!-- PDF content will be generated here -->
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Check authentication
+        function checkAuth() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (isLoggedIn !== 'true') {
+                window.location.href = '../index.html';
+                return false;
+            }
+            return true;
+        }
+
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('isLoggedIn');
+            window.location.href = '../index.html';
+        }
+
+        // Toggle visa price input
+        function toggleVisaPrice() {
+            const checkbox = document.getElementById('visaIncluded');
+            const priceInput = document.getElementById('visaPrice');
+            
+            if (checkbox.checked) {
+                priceInput.disabled = false;
+                priceInput.focus();
+            } else {
+                priceInput.disabled = true;
+                priceInput.value = '';
+            }
+            calculateTotal();
+        }
+
+        // Toggle transport price input
+        function toggleTransportPrice() {
+            const checkbox = document.getElementById('transportIncluded');
+            const priceInput = document.getElementById('transportPrice');
+            
+            if (checkbox.checked) {
+                priceInput.disabled = false;
+                priceInput.focus();
+            } else {
+                priceInput.disabled = true;
+                priceInput.value = '';
+            }
+            calculateTotal();
+        }
+
+        // Add accommodation row
+        function addAccommodationRow() {
+            const tbody = document.querySelector('#accommodationTable tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            tbody.appendChild(newRow);
+        }
+
+        // Add airline row
+        function addAirlineRow() {
+            const tbody = document.querySelector('#airlineTable tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            tbody.appendChild(newRow);
+        }
+
+        // Remove row
+        function removeRow(button) {
+            const row = button.closest('tr');
+            const tbody = row.parentNode;
+            if (tbody.rows.length > 1) {
+                row.remove();
+                calculateTotal();
+            } else {
+                alert('At least one row is required.');
+            }
+        }
+
+        // Calculate total cost
+        function calculateTotal() {
+            let accommodationTotal = 0;
+            let visaTotal = 0;
+            let transportTotal = 0;
+            let airlineTotal = 0;
+
+            // Calculate accommodation total
+            const accommodationRows = document.querySelectorAll('#accommodationTable tbody tr');
+            accommodationRows.forEach(row => {
+                const priceInput = row.querySelector('input[name="price"]');
+                const nightsInput = row.querySelector('input[name="nights"]');
+                if (priceInput && priceInput.value && nightsInput && nightsInput.value) {
+                    const pricePerNight = parseFloat(priceInput.value) || 0;
+                    const nights = parseInt(nightsInput.value) || 0;
+                    accommodationTotal += pricePerNight * nights;
+                }
+            });
+
+            // Calculate visa total
+            const visaIncluded = document.getElementById('visaIncluded').checked;
+            if (visaIncluded) {
+                const visaPrice = document.getElementById('visaPrice').value;
+                visaTotal = parseFloat(visaPrice) || 0;
+            }
+
+            // Calculate transport total
+            const transportIncluded = document.getElementById('transportIncluded').checked;
+            if (transportIncluded) {
+                const transportPrice = document.getElementById('transportPrice').value;
+                transportTotal = parseFloat(transportPrice) || 0;
+            }
+
+            // Calculate airline total
+            const airlineRows = document.querySelectorAll('#airlineTable tbody tr');
+            airlineRows.forEach(row => {
+                const priceInput = row.querySelector('input[name="ticketPrice"]');
+                if (priceInput && priceInput.value) {
+                    airlineTotal += parseFloat(priceInput.value) || 0;
+                }
+            });
+
+            // Update display
+            document.getElementById('accommodationTotal').textContent = accommodationTotal.toLocaleString();
+            document.getElementById('visaTotal').textContent = visaTotal.toLocaleString();
+            document.getElementById('transportTotal').textContent = transportTotal.toLocaleString();
+            document.getElementById('airlineTotal').textContent = airlineTotal.toLocaleString();
+
+            const grandTotal = accommodationTotal + visaTotal + transportTotal + airlineTotal;
+            document.getElementById('grandTotal').textContent = grandTotal.toLocaleString();
+        }
+
+        // Save package
+        function savePackage() {
+            const packageData = collectPackageData();
+            if (!packageData) return;
+
+            // Save to localStorage (in real app, this would be an API call)
+            let packages = JSON.parse(localStorage.getItem('packages') || '[]');
+            packageData.id = Date.now().toString();
+            packageData.createdAt = new Date().toISOString();
+            packages.push(packageData);
+            localStorage.setItem('packages', JSON.stringify(packages));
+
+            alert('Package saved successfully!');
+        }
+
+        // Preview package
+        function previewPackage() {
+            const packageData = collectPackageData();
+            if (!packageData) return;
+
+            // Create preview modal or new window
+            alert('Package preview functionality would open a modal or new window with package details.');
+        }
+
+        // Collect package data
+        function collectPackageData() {
+            const packageName = document.getElementById('packageName').value;
+            const packageDuration = document.getElementById('packageDuration').value;
+            
+            if (!packageName || !packageDuration) {
+                alert('Please fill in package name and duration.');
+                return null;
+            }
+
+            const packageData = {
+                name: packageName,
+                duration: packageDuration,
+                description: document.getElementById('packageDescription').value,
+                accommodation: [],
+                visa: {
+                    included: document.getElementById('visaIncluded').checked,
+                    price: document.getElementById('visaIncluded').checked ? parseFloat(document.getElementById('visaPrice').value) || 0 : 0
+                },
+                transport: {
+                    type: document.getElementById('transportType').value,
+                    included: document.getElementById('transportIncluded').checked,
+                    price: document.getElementById('transportIncluded').checked ? parseFloat(document.getElementById('transportPrice').value) || 0 : 0
+                },
+                flights: [],
+                totalCost: 0
+            };
+
+            // Collect accommodation data
+            const accommodationRows = document.querySelectorAll('#accommodationTable tbody tr');
+            accommodationRows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                if (inputs[0].value || inputs[1].value) {
+                    const pricePerNight = parseFloat(inputs[2].value) || 0;
+                    const nights = parseInt(inputs[3].value) || 0;
+                    packageData.accommodation.push({
+                        city: inputs[0].value,
+                        hotelName: inputs[1].value,
+                        pricePerNight: pricePerNight,
+                        nights: nights,
+                        totalPrice: pricePerNight * nights
+                    });
+                }
+            });
+
+            // Collect flight data
+            const airlineRows = document.querySelectorAll('#airlineTable tbody tr');
+            airlineRows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                if (inputs[0].value || inputs[1].value) {
+                    packageData.flights.push({
+                        airlineName: inputs[0].value,
+                        sector: inputs[1].value,
+                        date: inputs[2].value,
+                        timing: inputs[3].value,
+                        price: parseFloat(inputs[4].value) || 0
+                    });
+                }
+            });
+
+            // Calculate total cost
+            packageData.totalCost = packageData.accommodation.reduce((sum, acc) => sum + acc.totalPrice, 0) +
+                                   packageData.visa.price +
+                                   packageData.transport.price +
+                                   packageData.flights.reduce((sum, flight) => sum + flight.price, 0);
+
+            return packageData;
+        }
+
+        // Download package PDF
+        function downloadPackagePDF() {
+            const packageData = collectPackageData();
+            if (!packageData) return;
+
+            // Create PDF content
+            let pdfHTML = `
+                <div class="pdf-header">
+                    <img src="../pics/logo.png" alt="Company Logo" class="pdf-logo" onerror="this.style.display='none';">
+                    <h1>AL ZAHID MADNI TRAVELS (PVT) LTD.</h1>
+                    <h2>${packageData.name}</h2>
+                </div>
+                <div class="package-info">
+                    <span><strong>Package:</strong> ${packageData.name}</span>
+                    <span><strong>Duration:</strong> ${packageData.duration}</span>
+                </div>
+            `;
+
+            if (packageData.description) {
+                pdfHTML += `
+                    <div class="pdf-section">
+                        <div class="pdf-section-title">Package Description</div>
+                        <p>${packageData.description}</p>
+                    </div>
+                `;
+            }
+
+            // Accommodation section
+            if (packageData.accommodation.length > 0) {
+                pdfHTML += `
+                    <div class="pdf-section">
+                        <div class="pdf-section-title">Accommodation Included</div>
+                        <table class="pdf-table">
+                            <thead>
+                                <tr>
+                                    <th>City</th>
+                                    <th>Hotel Name</th>
+                                    <th>Nights</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                packageData.accommodation.forEach(acc => {
+                    pdfHTML += `
+                        <tr>
+                            <td>${acc.city}</td>
+                            <td>${acc.hotelName}</td>
+                            <td>${acc.nights}</td>
+                        </tr>
+                    `;
+                });
+                pdfHTML += `</tbody></table></div>`;
+            }
+
+            // Visa section
+            pdfHTML += `
+                <div class="pdf-section">
+                    <div class="pdf-section-title">Visa</div>
+                    <div class="${packageData.visa.included ? 'included-item' : 'not-included-item'}">
+                        <strong>${packageData.visa.included ? '✓ Visa Processing Included' : '✗ Visa Processing Not Included'}</strong>
+                        ${packageData.visa.included ? '<br><small>All visa processing and documentation will be handled by our team.</small>' : '<br><small>Visa processing will be handled separately by the customer.</small>'}
+                    </div>
+                </div>
+            `;
+
+            // Transport section
+            pdfHTML += `
+                <div class="pdf-section">
+                    <div class="pdf-section-title">Transport</div>
+                    <div class="${packageData.transport.included ? 'included-item' : 'not-included-item'}">
+                        <strong>${packageData.transport.included ? '✓ Transport Included' : '✗ Transport Not Included'}</strong>
+                        ${packageData.transport.type ? `<br><small>Transport Type: ${packageData.transport.type}</small>` : ''}
+                        ${packageData.transport.included ? '<br><small>All local transportation will be provided.</small>' : '<br><small>Transportation arrangements to be made separately.</small>'}
+                    </div>
+                </div>
+            `;
+
+            // Flights section
+            if (packageData.flights.length > 0) {
+                pdfHTML += `
+                    <div class="pdf-section">
+                        <div class="pdf-section-title">Flight Details Included</div>
+                        <table class="pdf-table">
+                            <thead>
+                                <tr>
+                                    <th>Airline</th>
+                                    <th>Sector</th>
+                                    <th>Date</th>
+                                    <th>Timing</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                packageData.flights.forEach(flight => {
+                    pdfHTML += `
+                        <tr>
+                            <td>${flight.airlineName}</td>
+                            <td>${flight.sector}</td>
+                            <td>${flight.date}</td>
+                            <td>${flight.timing}</td>
+                        </tr>
+                    `;
+                });
+                pdfHTML += `</tbody></table></div>`;
+            }
+
+            // Total section
+            pdfHTML += `
+                <div class="total-section">
+                    <h3>Complete Package Price</h3>
+                    <div class="total-amount">PKR ${packageData.totalCost.toLocaleString()}</div>
+                    <p>All mentioned services included • No hidden charges</p>
+                </div>
+                
+                <div class="pdf-footer">
+                    <p><strong>Contact Information:</strong></p>
+                    <p>Phone: 0300-9666476 | Email: info@alzahidmadni.com</p>
+                    <p>Website: alzahidmadni.com</p>
+                    <br>
+                    <p><small>Terms and conditions apply. Package details subject to availability and confirmation.</small></p>
+                    <p><small>© 2025 Al Zahid Madni Travels (PVT) Ltd. All rights reserved.</small></p>
+                </div>
+            `;
+
+            // Set the PDF container content
+            const pdfContainer = document.getElementById('pdfContainer');
+            pdfContainer.innerHTML = pdfHTML;
+            pdfContainer.style.display = 'block';
+
+            // Generate PDF using html2canvas and jsPDF
+            html2canvas(pdfContainer, {
+                scale: 2,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: '#ffffff',
+                width: 794,
+                height: 1123
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                
+                const imgWidth = 210;
+                const pageHeight = 295;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 0;
+
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+
+                const fileName = `${packageData.name.replace(/[^a-z0-9]/gi, '_')}_Package.pdf`;
+                pdf.save(fileName);
+                
+                // Hide the PDF container
+                pdfContainer.style.display = 'none';
+            }).catch(error => {
+                console.error('PDF generation failed:', error);
+                alert('PDF generation failed. Please try again.');
+                pdfContainer.style.display = 'none';
+            });
+        }
+
+        // Initialize page
+        window.addEventListener('load', function() {
+            if (checkAuth()) {
+                calculateTotal();
+            }
+        });
+
+        // Add event listeners for real-time calculation
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('price-input')) {
+                calculateTotal();
+            }
+        });
+    </script>
+</body>
+</html>

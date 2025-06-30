@@ -7,8 +7,8 @@
         function checkAuth() {
             const isLoggedIn = sessionStorage.getItem('isLoggedIn');
             if (isLoggedIn === 'true') {
-                // Redirect to voucher page
-                window.location.href = 'voucher/';
+                // Redirect to dashboard page
+                window.location.href = 'dashboard/';
             }
         }
         
@@ -22,8 +22,8 @@
             
             if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
                 sessionStorage.setItem('isLoggedIn', 'true');
-                // Redirect to voucher page
-                window.location.href = 'voucher/';
+                // Redirect to dashboard page
+                window.location.href = 'dashboard/';
             } else {
                 errorMessage.style.display = 'block';
                 // Clear password field

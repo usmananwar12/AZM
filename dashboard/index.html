@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Al Zahid Madni Travels Admin</title>
+    <link rel="icon" href="../pics/logo.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header */
+        .header-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .company-name {
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 2rem;
+        }
+        
+        .dashboard-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 4rem 3rem;
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .welcome-title {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .welcome-subtitle {
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .action-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            min-width: 200px;
+            flex: 1;
+            max-width: 250px;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .action-card.voucher {
+            border-color: #3498db;
+        }
+        
+        .action-card.voucher:hover {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+        }
+        
+        .action-card.package {
+            border-color: #27ae60;
+        }
+        
+        .action-card.package:hover {
+            background: linear-gradient(135deg, #27ae60, #229954);
+            color: white;
+        }
+        
+        .action-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .action-card.voucher .action-icon {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+        }
+        
+        .action-card.package .action-icon {
+            background: linear-gradient(135deg, #27ae60, #229954);
+            color: white;
+        }
+        
+        .action-card:hover .action-icon {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .action-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .action-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin: 0;
+        }
+        
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .footer p {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-nav {
+                padding: 0 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .company-name {
+                font-size: 1rem;
+                text-align: center;
+            }
+            
+            .main-content {
+                padding: 2rem 1rem;
+            }
+            
+            .dashboard-container {
+                padding: 2rem 1.5rem;
+            }
+            
+            .welcome-title {
+                font-size: 2rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .action-card {
+                max-width: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .welcome-title {
+                font-size: 1.5rem;
+            }
+            
+            .dashboard-container {
+                padding: 1.5rem 1rem;
+            }
+            
+            .action-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header-section">
+        <div class="header-nav">
+            <div class="logo-section">
+                <img src="../pics/logo.png" alt="Logo" class="logo">
+                <span class="company-name">Al Zahid Madni Travels - Admin Portal</span>
+            </div>
+            <a href="#" class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt me-1"></i>Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="dashboard-container">
+            <h1 class="welcome-title">Welcome to Al Zahid Madni Admin Portal</h1>
+            <p class="welcome-subtitle">Choose an option to get started with managing your travel services</p>
+            
+            <div class="action-buttons">
+                <a href="../voucher/" class="action-card voucher">
+                    <div class="action-icon">
+                        <i class="fas fa-file-invoice"></i>
+                    </div>
+                    <h3 class="action-title">Create Voucher</h3>
+                    <p class="action-description">Generate travel vouchers for customers</p>
+                </a>
+                
+                <a href="../package/" class="action-card package">
+                    <div class="action-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <h3 class="action-title">Create Package</h3>
+                    <p class="action-description">Design travel packages and offers</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 Al Zahid Madni Travels Pvt Limited. All rights reserved.</p>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Check authentication
+        function checkAuth() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (isLoggedIn !== 'true') {
+                window.location.href = '../index.html';
+                return false;
+            }
+            return true;
+        }
+
+        // Logout function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                sessionStorage.removeItem('isLoggedIn');
+                window.location.href = '../index.html';
+            }
+        }
+
+        // Initialize page
+        window.addEventListener('load', function() {
+            checkAuth();
+        });
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const actionCards = document.querySelectorAll('.action-card');
+            
+            actionCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
