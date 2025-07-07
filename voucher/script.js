@@ -186,19 +186,23 @@
 
             // Create PDF content with logo
             let pdfHTML = `
-                <div class="pdf-header">
-                    <img src="../pics/logo.png" alt="Company Logo" class="pdf-logo" onerror="this.style.display='none';">
-                    <h1>AL ZAHID MADNI TRAVELS (PVT) LTD.</h1>
+                <div class="pdf-header" style="display: flex; align-items: center; justify-content: center; gap: 16px; position: relative;">
+                    <img src="../pics/logo.png" alt="Company Logo" class="pdf-logo" style="height: 60px; margin-right: 16px; position: absolute; left: 0;" onerror="this.style.display='none';">
+                    <h1 style="margin: 0 auto; font-size: 1.6em; text-align: center; width: 100%;">AL-ZAHID MADNI TRAVELS (PVT) LTD.</h1>
                 </div>
                 <div class="pdf-info">
                     <span>Voucher No: ${voucherNo}</span>
-                    <span>Date: ${new Date(voucherDate).toLocaleDateString()}</span>
+                    <span>Date: ${(() => {
+                        const d = new Date(voucherDate);
+                        const day = String(d.getDate()).padStart(2, '0');
+                        const month = String(d.getMonth() + 1).padStart(2, '0');
+                        const year = d.getFullYear();
+                        return `${day}/${month}/${year}`;
+                    })()}</span>
                 </div>
-            `;
-
-            // Add Pax Details
-            pdfHTML += '<div class="pdf-section-title">Pax(es) Details</div>';
-            pdfHTML += '<table class="pdf-table"><thead><tr><th>Passport No.</th><th>Pax Name</th><th>With Bed</th><th>With Transport</th><th>With Ziarat</th><th>With Food</th></tr></thead><tbody>';
+            `;        
+            // Add Pax Details        
+            pdfHTML += '<div class="pdf-section-title">Pax(es) Details</div>';        pdfHTML += '<table class="pdf-table"><thead><tr><th>Passport No.</th><th>Pax Name</th><th>With Bed</th><th>With Transport</th><th>With Ziarat</th><th>With Food</th></tr></thead><tbody>';
             
             const paxRows = document.querySelectorAll('#paxTable tbody tr');
             let hasPaxData = false;
