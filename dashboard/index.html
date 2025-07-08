@@ -618,8 +618,8 @@
                         <td><input type="text" class="form-control" value="${flight.flightNo}" ></td>
                         <td><input type="text" class="form-control" value="${flight.sector}" ></td>
                         <td><input type="text" class="form-control" value="${flight.flightDate}" ></td>
-                        <td><input type="text" class="form-control" value="${flight.departure}" ></td>
-                        <td><input type="text" class="form-control" value="${flight.arrival}" ></td>
+                        <td><input type="text" class="form-control" value="${flight.departureTime || ''}" ></td>
+                        <td><input type="text" class="form-control" value="${flight.arrivalTime || ''}" ></td>
                         <td>
                             <button type="button" class="btn btn-sm btn-danger" onclick="removeFlightRow(this)">Remove</button>
                         </td>
@@ -781,16 +781,16 @@
                 const flightNo = row.querySelector('td:nth-child(2) input').value;
                 const sector = row.querySelector('td:nth-child(3) input').value;
                 const flightDate = row.querySelector('td:nth-child(4) input').value;
-                const departure = row.querySelector('td:nth-child(5) input').value;
-                const arrival = row.querySelector('td:nth-child(6) input').value;
+                const departureTime = row.querySelector('td:nth-child(5) input').value;
+                const arrivalTime = row.querySelector('td:nth-child(6) input').value;
                 flightDetails.push({
                     _id: row.dataset.flightId, // Assuming flightDetails have _id
                     airline: airline,
                     flightNo: flightNo,
                     sector: sector,
                     flightDate: flightDate,
-                    departure: departure,
-                    arrival: arrival
+                    departureTime: departureTime,
+                    arrivalTime: arrivalTime
                 });
             });
 
