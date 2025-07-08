@@ -377,3 +377,103 @@
                 pdfContainer.style.display = 'none';
             });
         }
+
+// Add event listeners for new buttons
+window.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('addVoucherBtn').addEventListener('click', addVoucher);
+    document.getElementById('previewVoucherBtn').addEventListener('click', previewVoucher);
+    document.getElementById('downloadVoucherBtn').addEventListener('click', downloadPDF);
+});
+
+async function addVoucher() {
+    // Collect form data
+    const voucherNo = document.getElementById('voucherNo').value;
+    const voucherDate = document.getElementById('voucherDate').value;
+    if (!voucherNo || !voucherDate) {
+        alert('Please fill in Voucher No and Date');
+        return;
+    }
+    // Pax Details
+    const paxRows = document.querySelectorAll('#paxTable tbody tr');
+    let pax = null;
+    for (const row of paxRows) {
+        const inputs = row.querySelectorAll('input');
+        if (inputs[0].value || inputs[1].value) {
+            pax = {
+                voucherNo,
+                passportNo: inputs[0].value,
+                name: inputs[1].value,
+                withBed: inputs[2].checked,
+                withTransport: inputs[3].checked,
+                withZiarat: inputs[4].checked,
+                food: inputs[5].checked ? 'Yes' : 'No',
+                flightDetails: [],
+                accommodationDetails: [],
+                contactDetails: []
+            };
+            break; // Only first pax for now
+        }
+    }
+    if (!pax) {
+        alert('Please enter at least one Pax detail.');
+        return;
+    }
+    // Flight Details
+    const flightRows = document.querySelectorAll('#flightTable tbody tr');
+    for (const row of flightRows) {
+        const inputs = row.querySelectorAll('input');
+        if (inputs[0].value || inputs[1].value) {
+            pax.flightDetails.push({
+                airline: inputs[0].value,
+                flightNo: inputs[1].value,
+                sector: inputs[2].value,
+                flightDate: inputs[3].value,
+                departureTime: inputs[4].value,
+                arrivalTime: inputs[5].value
+            });
+        }
+    }
+    // Accommodation Details
+    const accommodationRows = document.querySelectorAll('#accommodationTable tbody tr');
+    for (const row of accommodationRows) {
+        const inputs = row.querySelectorAll('input');
+        if (inputs[0].value || inputs[1].value) {
+            pax.accommodationDetails.push({
+                city: inputs[0].value,
+                hotelName: inputs[1].value,
+                confirmationNumber: inputs[2].value,
+                checkIn: inputs[3].value,
+                checkOut: inputs[4].value,
+                nights: inputs[5].value,
+                roomType: inputs[6].value
+            });
+        }
+    }
+    // Contact Details
+    const contactRows = document.querySelectorAll('#contactTable tbody tr');
+    for (const row of contactRows) {
+        const inputs = row.querySelectorAll('input');
+        if (inputs[0].value || inputs[1].value) {
+            pax.contactDetails.push({
+                name: inputs[0].value,
+                contactNumber: inputs[1].value
+            });
+        }
+    }
+    // POST to backend
+    try {
+        const res = await fetch('http://localhost:8001/api/paxes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(pax)
+        });
+        const data = await res.json();
+        if (res.ok) {
+            alert('Voucher added successfully!');
+        } else {
+            alert('Error: ' + (data.msg || 'Failed to add voucher'));
+        }
+    } catch (err) {
+        alert('Error: ' + err.message);
+    }
+}
