@@ -535,7 +535,7 @@
         // Voucher List Logic
         async function fetchVouchers() {
             try {
-                const res = await fetch('http://localhost:8000/api/paxes/');
+                const res = await fetch('https://azm-38x9.onrender.com/api/paxes/');
                 if (!res.ok) throw new Error('Failed to fetch vouchers');
                 const vouchers = await res.json();
                 renderVoucherTable(vouchers);
@@ -569,7 +569,7 @@
         let currentEditVoucher = null;
         async function editVoucher(id) {
             try {
-                const res = await fetch('http://localhost:8000/api/paxes/' + id);
+                const res = await fetch('https://azm-38x9.onrender.com/api/paxes/' + id);
                 if (!res.ok) throw new Error('Failed to fetch voucher');
                 const voucher = await res.json();
                 currentEditVoucher = voucher;
@@ -841,7 +841,7 @@
             e.preventDefault();
             const updatedVoucher = collectEditVoucherData();
             try {
-                const res = await fetch('http://localhost:8000/api/paxes/' + updatedVoucher._id, {
+                const res = await fetch('https://azm-38x9.onrender.com/api/paxes/' + updatedVoucher._id, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(updatedVoucher)
@@ -858,7 +858,7 @@
         // Download Voucher Logic (voucher page style, no preview)
         async function downloadVoucher(id) {
             try {
-                const res = await fetch('http://localhost:8000/api/paxes/' + id);
+                const res = await fetch('https://azm-38x9.onrender.com/paxes/' + id);
                 if (!res.ok) throw new Error('Failed to fetch voucher');
                 const voucher = await res.json();
                 await generateVoucherPDF(voucher);

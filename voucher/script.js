@@ -468,7 +468,7 @@ async function addVoucher() {
         contactDetails
     };
     try {
-        const res = await fetch('http://localhost:8000/api/paxes', {
+        const res = await fetch('https://azm-38x9.onrender.com/api/paxes', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(voucherData)
