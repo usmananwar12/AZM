@@ -37,12 +37,15 @@ app.use((req, res, next) => {
 // --- Voucher Schema ---
 const voucherSchema = new mongoose.Schema({
     voucherNo: { type: String, required: true },
-    passportNo: { type: String, required: true },
-    name: { type: String, required: true },
-    withBed: { type: Boolean, required: true },
-    withTransport: { type: Boolean, required: true },
-    withZiarat: { type: Boolean, required: true },
-    food: { type: String },
+    voucherDate: { type: String, required: true },
+    paxes: [{
+        passportNo: { type: String, required: true },
+        name: { type: String, required: true },
+        withBed: { type: Boolean, required: true },
+        withTransport: { type: Boolean, required: true },
+        withZiarat: { type: Boolean, required: true },
+        food: { type: String }
+    }],
     flightDetails: [{
         airline: String,
         flightNo: String,
@@ -64,7 +67,7 @@ const voucherSchema = new mongoose.Schema({
         name: String,
         contactNumber: String
     }]
-});
+}, { timestamps: true });
 const Voucher = mongoose.model('vouchers', voucherSchema);
 
 // --- Health Check Route ---
@@ -76,15 +79,24 @@ app.get('/', (req, res) => {
 app.post('/api/paxes', async (req, res) => {
     try {
         const body = req.body;
-        // Validate required fields
-        const requiredFields = ['voucherNo', 'passportNo', 'name', 'withBed', 'withTransport', 'withZiarat'];
-        const missing = requiredFields.filter(f => body[f] === undefined || body[f] === null || body[f] === '');
-        if (missing.length > 0) {
-            console.log('❌ Missing fields:', missing);
-            return res.status(400).json({ msg: `Missing required fields: ${missing.join(', ')}` });
+        // Validate voucherNo and voucherDate
+        if (!body.voucherNo || !body.voucherDate) {
+            return res.status(400).json({ msg: 'voucherNo and voucherDate are required.' });
         }
-        if (typeof body.withBed !== 'boolean' || typeof body.withTransport !== 'boolean' || typeof body.withZiarat !== 'boolean') {
-            return res.status(400).json({ msg: 'withBed, withTransport, and withZiarat must be boolean' });
+        // Validate paxes array
+        if (!Array.isArray(body.paxes) || body.paxes.length === 0) {
+            return res.status(400).json({ msg: 'At least one pax is required in paxes array.' });
+        }
+        // Validate each pax
+        for (const pax of body.paxes) {
+            const requiredFields = ['passportNo', 'name', 'withBed', 'withTransport', 'withZiarat'];
+            const missing = requiredFields.filter(f => pax[f] === undefined || pax[f] === null || pax[f] === '');
+            if (missing.length > 0) {
+                return res.status(400).json({ msg: `Missing required fields in pax: ${missing.join(', ')}` });
+            }
+            if (typeof pax.withBed !== 'boolean' || typeof pax.withTransport !== 'boolean' || typeof pax.withZiarat !== 'boolean') {
+                return res.status(400).json({ msg: 'withBed, withTransport, and withZiarat must be boolean in each pax' });
+            }
         }
         // Save to DB
         const result = await Voucher.create(body);
@@ -113,7 +125,9 @@ app.get('/paxes', async (req, res) => {
         const allVouchers = await Voucher.find({});
         const html = `
         <ul>
-          ${allVouchers.map((p) => `<li>${p.name} - ${p.passportNo}</li>`).join('')}
+          ${allVouchers.map((v) =>
+            `<li>${v.paxes.map(p => `${p.name} - ${p.passportNo}`).join(', ')}</li>`
+          ).join('')}
         </ul>
       `;
         res.send(html);
@@ -139,6 +153,22 @@ app.get('/api/paxes/:id', async (req, res) => {
 app.patch('/api/paxes/:id', async (req, res) => {
     try {
         const updates = req.body;
+        // If paxes is present, validate it
+        if (updates.paxes) {
+            if (!Array.isArray(updates.paxes) || updates.paxes.length === 0) {
+                return res.status(400).json({ msg: 'At least one pax is required in paxes array.' });
+            }
+            for (const pax of updates.paxes) {
+                const requiredFields = ['passportNo', 'name', 'withBed', 'withTransport', 'withZiarat'];
+                const missing = requiredFields.filter(f => pax[f] === undefined || pax[f] === null || pax[f] === '');
+                if (missing.length > 0) {
+                    return res.status(400).json({ msg: `Missing required fields in pax: ${missing.join(', ')}` });
+                }
+                if (typeof pax.withBed !== 'boolean' || typeof pax.withTransport !== 'boolean' || typeof pax.withZiarat !== 'boolean') {
+                    return res.status(400).json({ msg: 'withBed, withTransport, and withZiarat must be boolean in each pax' });
+                }
+            }
+        }
         const voucher = await Voucher.findByIdAndUpdate(req.params.id, updates, { new: true, runValidators: true });
         if (!voucher) return res.status(404).json({ error: 'Voucher not found' });
         return res.json(voucher);

@@ -393,37 +393,33 @@ async function addVoucher() {
         alert('Please fill in Voucher No and Date');
         return;
     }
-    // Pax Details
+    // Pax Details (collect all rows into an array)
     const paxRows = document.querySelectorAll('#paxTable tbody tr');
-    let pax = null;
-    for (const row of paxRows) {
+    const paxes = [];
+    paxRows.forEach(row => {
         const inputs = row.querySelectorAll('input');
         if (inputs[0].value || inputs[1].value) {
-            pax = {
-                voucherNo,
+            paxes.push({
                 passportNo: inputs[0].value,
                 name: inputs[1].value,
                 withBed: inputs[2].checked,
                 withTransport: inputs[3].checked,
                 withZiarat: inputs[4].checked,
-                food: inputs[5].checked ? 'Yes' : 'No',
-                flightDetails: [],
-                accommodationDetails: [],
-                contactDetails: []
-            };
-            break; // Only first pax for now
+                food: inputs[5].checked ? 'Yes' : 'No'
+            });
         }
-    }
-    if (!pax) {
+    });
+    if (paxes.length === 0) {
         alert('Please enter at least one Pax detail.');
         return;
     }
-    // Flight Details
+    // Flight Details (array at root)
     const flightRows = document.querySelectorAll('#flightTable tbody tr');
-    for (const row of flightRows) {
+    const flightDetails = [];
+    flightRows.forEach(row => {
         const inputs = row.querySelectorAll('input');
         if (inputs[0].value || inputs[1].value) {
-            pax.flightDetails.push({
+            flightDetails.push({
                 airline: inputs[0].value,
                 flightNo: inputs[1].value,
                 sector: inputs[2].value,
@@ -432,13 +428,14 @@ async function addVoucher() {
                 arrivalTime: inputs[5].value
             });
         }
-    }
-    // Accommodation Details
+    });
+    // Accommodation Details (array at root)
     const accommodationRows = document.querySelectorAll('#accommodationTable tbody tr');
-    for (const row of accommodationRows) {
+    const accommodationDetails = [];
+    accommodationRows.forEach(row => {
         const inputs = row.querySelectorAll('input');
         if (inputs[0].value || inputs[1].value) {
-            pax.accommodationDetails.push({
+            accommodationDetails.push({
                 city: inputs[0].value,
                 hotelName: inputs[1].value,
                 confirmationNumber: inputs[2].value,
@@ -448,24 +445,33 @@ async function addVoucher() {
                 roomType: inputs[6].value
             });
         }
-    }
-    // Contact Details
+    });
+    // Contact Details (array at root)
     const contactRows = document.querySelectorAll('#contactTable tbody tr');
-    for (const row of contactRows) {
+    const contactDetails = [];
+    contactRows.forEach(row => {
         const inputs = row.querySelectorAll('input');
         if (inputs[0].value || inputs[1].value) {
-            pax.contactDetails.push({
+            contactDetails.push({
                 name: inputs[0].value,
                 contactNumber: inputs[1].value
             });
         }
-    }
-    // POST to backend
+    });
+    // POST to backend with correct structure
+    const voucherData = {
+        voucherNo,
+        voucherDate,
+        paxes,
+        flightDetails,
+        accommodationDetails,
+        contactDetails
+    };
     try {
         const res = await fetch('http://localhost:8000/api/paxes', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(pax)
+            body: JSON.stringify(voucherData)
         });
         const data = await res.json();
         if (res.ok) {

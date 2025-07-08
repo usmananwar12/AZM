@@ -254,6 +254,76 @@
                 font-size: 1.5rem;
             }
         }
+
+        /* PDF Styles copied from voucher/style.css for pixel-perfect PDF rendering */
+        .pdf-container {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            padding: 20mm;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            color: #000;
+        }
+        .pdf-container .pdf-header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #000;
+        }
+        .pdf-container .pdf-header .pdf-logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 10px;
+            display: block;
+        }
+        .pdf-container .pdf-header h1 {
+            font-size: 20px;
+            margin: 0;
+            font-weight: bold;
+        }
+        .pdf-container .pdf-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .pdf-container .pdf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        .pdf-container .pdf-table th,
+        .pdf-container .pdf-table td {
+            border: 1px solid #000;
+            padding: 6px;
+            text-align: left;
+            font-size: 10px;
+        }
+        .pdf-container .pdf-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            text-align: center;
+        }
+        .pdf-container .pdf-section-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 15px 0 8px 0;
+        }
+        .pdf-container .pdf-footer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #000;
+        }
+        .pdf-container .pdf-footer > div {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
     </style>
 </head>
 <body>
@@ -301,11 +371,7 @@
                         <thead class="table-light">
                             <tr>
                                 <th>Voucher No</th>
-                                <th>Passport No</th>
-                                <th>Name</th>
-                                <th>With Bed</th>
-                                <th>With Transport</th>
-                                <th>With Ziarat</th>
+                                <th>Date</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -315,6 +381,103 @@
                     </table>
                 </div>
                 <div id="voucher-list-empty" class="text-muted" style="display:none;">No vouchers found.</div>
+            </div>
+            <!-- Hidden PDF Container for Download -->
+            <div id="pdfContainer" class="pdf-container" style="display:none;"></div>
+
+            <!-- Edit Voucher Modal -->
+            <div class="modal fade" id="editVoucherModal" tabindex="-1" aria-labelledby="editVoucherModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editVoucherModalLabel">Edit Voucher</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="editVoucherForm">
+                                <input type="hidden" id="editVoucherId">
+                                <div class="mb-3">
+                                    <label class="form-label">Voucher No</label>
+                                    <input type="text" class="form-control" id="editVoucherNo" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Date</label>
+                                    <input type="text" class="form-control" id="editVoucherDate" >
+                                </div>
+                                <h6>Paxes</h6>
+                                <div class="table-responsive mb-3">
+                                    <table class="table table-bordered" id="editPaxesTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Passport No</th>
+                                                <th>With Bed</th>
+                                                <th>With Transport</th>
+                                                <th>With Ziarat</th>
+                                                <th>Food</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" id="addPaxRowBtn">Add Pax</button>
+                                </div>
+                                <h6>Flight Details</h6>
+                                <div class="table-responsive mb-3">
+                                    <table class="table table-bordered" id="editFlightsTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Airline</th>
+                                                <th>Flight No</th>
+                                                <th>Sector</th>
+                                                <th>Flight Date</th>
+                                                <th>Departure</th>
+                                                <th>Arrival</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" id="addFlightRowBtn">Add Flight</button>
+                                </div>
+                                <h6>Accommodation Details</h6>
+                                <div class="table-responsive mb-3">
+                                    <table class="table table-bordered" id="editAccommodationsTable">
+                                        <thead>
+                                            <tr>
+                                                <th>City</th>
+                                                <th>Hotel Name</th>
+                                                <th>Confirmation #</th>
+                                                <th>Check-In</th>
+                                                <th>Check-Out</th>
+                                                <th>Nights</th>
+                                                <th>Room Type</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" id="addAccommodationRowBtn">Add Accommodation</button>
+                                </div>
+                                <h6>Contact Details</h6>
+                                <div class="table-responsive mb-3">
+                                    <table class="table table-bordered" id="editContactsTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Contact Number</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" id="addContactRowBtn">Add Contact</button>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -326,6 +489,9 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jsPDF and html2canvas for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <script>
         // Check authentication
@@ -389,35 +555,471 @@
             document.getElementById('voucher-list-empty').style.display = 'none';
             tbody.innerHTML = vouchers.map(voucher => `
                 <tr>
-                    <td>${voucher.voucherNo}</td>
-                    <td>${voucher.passportNo}</td>
-                    <td>${voucher.name}</td>
-                    <td>${voucher.withBed ? 'Yes' : 'No'}</td>
-                    <td>${voucher.withTransport ? 'Yes' : 'No'}</td>
-                    <td>${voucher.withZiarat ? 'Yes' : 'No'}</td>
+                    <td>${voucher.voucherNo || ''}</td>
+                    <td>${voucher.voucherDate ? new Date(voucher.voucherDate).toLocaleDateString() : ''}</td>
                     <td>
-                        <button class="btn btn-sm btn-primary me-2" onclick='editVoucher("${voucher._id}")'>Edit</button>
-                        <button class="btn btn-sm btn-danger" onclick='deleteVoucher("${voucher._id}")'>Delete</button>
+                        <button class="btn btn-sm btn-primary" onclick='editVoucher("${voucher._id}")'>Edit</button>
+                        <button class="btn btn-sm btn-success ms-2" onclick='downloadVoucher("${voucher._id}")'>Download</button>
                     </td>
                 </tr>
             `).join('');
         }
 
-        async function deleteVoucher(id) {
-            if (!confirm('Are you sure you want to delete this voucher?')) return;
+        // Edit Voucher Logic
+        let currentEditVoucher = null;
+        async function editVoucher(id) {
             try {
-                const res = await fetch(`http://localhost:8000/api/paxes/${id}`, { method: 'DELETE' });
-                if (!res.ok) throw new Error('Failed to delete voucher');
-                fetchVouchers();
+                const res = await fetch('http://localhost:8000/api/paxes/' + id);
+                if (!res.ok) throw new Error('Failed to fetch voucher');
+                const voucher = await res.json();
+                currentEditVoucher = voucher;
+                document.getElementById('editVoucherId').value = voucher._id;
+                document.getElementById('editVoucherNo').value = voucher.voucherNo || '';
+                document.getElementById('editVoucherDate').value = voucher.voucherDate || '';
+                renderEditPaxesTable(voucher.paxes || []);
+                renderEditFlightsTable(voucher.flightDetails || []);
+                renderEditAccommodationsTable(voucher.accommodationDetails || []);
+                renderEditContactsTable(voucher.contactDetails || []);
+                const modal = new bootstrap.Modal(document.getElementById('editVoucherModal'));
+                modal.show();
             } catch (err) {
-                alert('Error deleting voucher');
+                alert('Error loading voucher for edit');
             }
         }
 
-        function editVoucher(id) {
-            // For now, just log the voucher. Future: open modal/form to edit.
-            console.log('Edit voucher', id);
-            alert('Edit functionality coming soon!');
+        // Helper functions for rendering and managing rows in the edit modal
+        function renderEditPaxesTable(paxes) {
+            const tbody = document.getElementById('editPaxesTable').querySelector('tbody');
+            tbody.innerHTML = '';
+            paxes.forEach(pax => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><input type="text" class="form-control" value="${pax.name}" ></td>
+                        <td><input type="text" class="form-control" value="${pax.passportNo}"></td>
+                        <td><input type="checkbox" ${pax.withBed ? 'checked' : ''}></td>
+                        <td><input type="checkbox" ${pax.withTransport ? 'checked' : ''}></td>
+                        <td><input type="checkbox" ${pax.withZiarat ? 'checked' : ''}></td>
+                        <td><input type="text" class="form-control" value="${pax.food}"></td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-danger" onclick="removePaxRow(this)">Remove</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function renderEditFlightsTable(flights) {
+            const tbody = document.getElementById('editFlightsTable').querySelector('tbody');
+            tbody.innerHTML = '';
+            flights.forEach(flight => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><input type="text" class="form-control" value="${flight.airline}" ></td>
+                        <td><input type="text" class="form-control" value="${flight.flightNo}" ></td>
+                        <td><input type="text" class="form-control" value="${flight.sector}" ></td>
+                        <td><input type="text" class="form-control" value="${flight.flightDate}" ></td>
+                        <td><input type="text" class="form-control" value="${flight.departure}" ></td>
+                        <td><input type="text" class="form-control" value="${flight.arrival}" ></td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-danger" onclick="removeFlightRow(this)">Remove</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function renderEditAccommodationsTable(accommodations) {
+            const tbody = document.getElementById('editAccommodationsTable').querySelector('tbody');
+            tbody.innerHTML = '';
+            accommodations.forEach(accommodation => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><input type="text" class="form-control" value="${accommodation.city}" ></td>
+                        <td><input type="text" class="form-control" value="${accommodation.hotelName}" ></td>
+                        <td><input type="text" class="form-control" value="${accommodation.confirmationNo}" ></td>
+                        <td><input type="text" class="form-control" value="${accommodation.checkIn}" ></td>
+                        <td><input type="text" class="form-control" value="${accommodation.checkOut}" ></td>
+                        <td><input type="text" class="form-control" value="${accommodation.nights}" ></td>
+                        <td><input type="text" class="form-control" value="${accommodation.roomType}" ></td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-danger" onclick="removeAccommodationRow(this)">Remove</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function renderEditContactsTable(contacts) {
+            const tbody = document.getElementById('editContactsTable').querySelector('tbody');
+            tbody.innerHTML = '';
+            contacts.forEach(contact => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><input type="text" class="form-control" value="${contact.name}" ></td>
+                        <td><input type="text" class="form-control" value="${contact.contactNumber}" ></td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-danger" onclick="removeContactRow(this)">Remove</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function addPaxRow() {
+            const tbody = document.getElementById('editPaxesTable').querySelector('tbody');
+            tbody.innerHTML += `
+                <tr>
+                    <td><input type="text" class="form-control" value="" required></td>
+                    <td><input type="text" class="form-control" value="" required></td>
+                    <td><input type="checkbox" class="form-check-input"></td>
+                    <td><input type="checkbox" class="form-check-input"></td>
+                    <td><input type="checkbox" class="form-check-input"></td>
+                    <td><input type="text" class="form-control" value=""></td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-danger" onclick="removePaxRow(this)">Remove</button>
+                    </td>
+                </tr>
+            `;
+        }
+
+        function addFlightRow() {
+            const tbody = document.getElementById('editFlightsTable').querySelector('tbody');
+            tbody.innerHTML += `
+                <tr>
+                    <td><input type="text" class="form-control" value="" required></td>
+                    <td><input type="text" class="form-control" value="" required></td>
+                    <td><input type="text" class="form-control" value="" required></td>
+                    <td><input type="text" class="form-control" value="" required></td>
+                    <td><input type="text" class="form-control" value="" required></td>
+                    <td><input type="text" class="form-control" value="" required></td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-danger" onclick="removeFlightRow(this)">Remove</button>
+                    </td>
+                </tr>
+            `;
+        }
+
+        function addAccommodationRow() {
+            const tbody = document.getElementById('editAccommodationsTable').querySelector('tbody');
+            tbody.innerHTML += `
+                <tr>
+                    <td><input type="text" class="form-control" value="" required></td>
+                    <td><input type="text" class="form-control" value="" required></td>
+                    <td><input type="text" class="form-control" value="" required></td>
+                    <td><input type="text" class="form-control" value="" required></td>
+                    <td><input type="text" class="form-control" value="" required></td>
+                    <td><input type="text" class="form-control" value="" required></td>
+                    <td><input type="text" class="form-control" value="" required></td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-danger" onclick="removeAccommodationRow(this)">Remove</button>
+                    </td>
+                </tr>
+            `;
+        }
+
+        function addContactRow() {
+            const tbody = document.getElementById('editContactsTable').querySelector('tbody');
+            tbody.innerHTML += `
+                <tr>
+                    <td><input type="text" class="form-control" value="" required></td>
+                    <td><input type="text" class="form-control" value="" required></td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-danger" onclick="removeContactRow(this)">Remove</button>
+                    </td>
+                </tr>
+            `;
+        }
+
+        function removePaxRow(button) {
+            const row = button.closest('tr');
+            row.remove();
+        }
+
+        function removeFlightRow(button) {
+            const row = button.closest('tr');
+            row.remove();
+        }
+
+        function removeAccommodationRow(button) {
+            const row = button.closest('tr');
+            row.remove();
+        }
+
+        function removeContactRow(button) {
+            const row = button.closest('tr');
+            row.remove();
+        }
+
+        // On save, collect all data and send PATCH request
+        function collectEditVoucherData() {
+            const id = document.getElementById('editVoucherId').value;
+            const voucherNo = document.getElementById('editVoucherNo').value;
+            const voucherDate = document.getElementById('editVoucherDate').value;
+
+            const paxes = [];
+            document.getElementById('editPaxesTable').querySelectorAll('tbody tr').forEach(row => {
+                const name = row.querySelector('td:nth-child(1) input').value;
+                const passportNo = row.querySelector('td:nth-child(2) input').value;
+                const withBed = row.querySelector('td:nth-child(3) input').checked;
+                const withTransport = row.querySelector('td:nth-child(4) input').checked;
+                const withZiarat = row.querySelector('td:nth-child(5) input').checked;
+                const food = row.querySelector('td:nth-child(6) input').value;
+                paxes.push({
+                    _id: row.dataset.paxId, // Assuming paxes have _id
+                    name: name,
+                    passportNo: passportNo,
+                    withBed: withBed,
+                    withTransport: withTransport,
+                    withZiarat: withZiarat,
+                    food: food
+                });
+            });
+
+            const flightDetails = [];
+            document.getElementById('editFlightsTable').querySelectorAll('tbody tr').forEach(row => {
+                const airline = row.querySelector('td:nth-child(1) input').value;
+                const flightNo = row.querySelector('td:nth-child(2) input').value;
+                const sector = row.querySelector('td:nth-child(3) input').value;
+                const flightDate = row.querySelector('td:nth-child(4) input').value;
+                const departure = row.querySelector('td:nth-child(5) input').value;
+                const arrival = row.querySelector('td:nth-child(6) input').value;
+                flightDetails.push({
+                    _id: row.dataset.flightId, // Assuming flightDetails have _id
+                    airline: airline,
+                    flightNo: flightNo,
+                    sector: sector,
+                    flightDate: flightDate,
+                    departure: departure,
+                    arrival: arrival
+                });
+            });
+
+            const accommodationDetails = [];
+            document.getElementById('editAccommodationsTable').querySelectorAll('tbody tr').forEach(row => {
+                const city = row.querySelector('td:nth-child(1) input').value;
+                const hotelName = row.querySelector('td:nth-child(2) input').value;
+                const confirmationNo = row.querySelector('td:nth-child(3) input').value;
+                const checkIn = row.querySelector('td:nth-child(4) input').value;
+                const checkOut = row.querySelector('td:nth-child(5) input').value;
+                const nights = row.querySelector('td:nth-child(6) input').value;
+                const roomType = row.querySelector('td:nth-child(7) input').value;
+                accommodationDetails.push({
+                    _id: row.dataset.accommodationId, // Assuming accommodationDetails have _id
+                    city: city,
+                    hotelName: hotelName,
+                    confirmationNo: confirmationNo,
+                    checkIn: checkIn,
+                    checkOut: checkOut,
+                    nights: nights,
+                    roomType: roomType
+                });
+            });
+
+            const contactDetails = [];
+            document.getElementById('editContactsTable').querySelectorAll('tbody tr').forEach(row => {
+                const name = row.querySelector('td:nth-child(1) input').value;
+                const contactNumber = row.querySelector('td:nth-child(2) input').value;
+                contactDetails.push({
+                    _id: row.dataset.contactId, // Assuming contactDetails have _id
+                    name: name,
+                    contactNumber: contactNumber
+                });
+            });
+
+            return {
+                _id: id,
+                voucherNo: voucherNo,
+                voucherDate: voucherDate,
+                paxes: paxes,
+                flightDetails: flightDetails,
+                accommodationDetails: accommodationDetails,
+                contactDetails: contactDetails
+            };
+        }
+
+        document.getElementById('editVoucherForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const updatedVoucher = collectEditVoucherData();
+            try {
+                const res = await fetch('http://localhost:8000/api/paxes/' + updatedVoucher._id, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedVoucher)
+                });
+                if (!res.ok) throw new Error('Failed to update voucher');
+                const modal = bootstrap.Modal.getInstance(document.getElementById('editVoucherModal'));
+                modal.hide();
+                fetchVouchers();
+            } catch (err) {
+                alert('Error updating voucher');
+            }
+        });
+
+        // Download Voucher Logic (voucher page style, no preview)
+        async function downloadVoucher(id) {
+            try {
+                const res = await fetch('http://localhost:8000/api/paxes/' + id);
+                if (!res.ok) throw new Error('Failed to fetch voucher');
+                const voucher = await res.json();
+                await generateVoucherPDF(voucher);
+            } catch (err) {
+                alert('Error downloading voucher: ' + (err.message || err));
+            }
+        }
+
+        // PDF generation logic (copied from voucher page, no preview)
+        async function generateVoucherPDF(voucher) {
+            let pdfHTML = `
+                <div class="pdf-header" style="display: flex; align-items: center; justify-content: center; gap: 16px; position: relative;">
+                    <img src="../pics/logo.png" alt="Company Logo" class="pdf-logo" style="height: 60px; margin-right: 16px; position: absolute; left: 0;" onerror="this.style.display='none';">
+                    <h1 style="margin: 0 auto; font-size: 1.6em; text-align: center; width: 100%;">AL-ZAHID MADNI TRAVELS (PVT) LTD.</h1>
+                </div>
+                <div class="pdf-info">
+                    <span>Voucher No: ${voucher.voucherNo || ''}</span>
+                    <span>Date: ${voucher.voucherDate ? new Date(voucher.voucherDate).toLocaleDateString() : ''}</span>
+                </div>
+            `;
+            // Paxes
+            pdfHTML += '<div class="pdf-section-title">Pax(es) Details</div>';
+            pdfHTML += '<table class="pdf-table"><thead><tr><th>Passport No.</th><th>Pax Name</th><th>With Bed</th><th>With Transport</th><th>With Ziarat</th><th>With Food</th></tr></thead><tbody>';
+            let hasPaxData = false;
+            (voucher.paxes || []).forEach(pax => {
+                hasPaxData = true;
+                pdfHTML += '<tr>';
+                pdfHTML += `<td>${pax.passportNo || '-'}</td>`;
+                pdfHTML += `<td>${pax.name || '-'}</td>`;
+                pdfHTML += `<td>${pax.withBed ? '✓' : '×'}</td>`;
+                pdfHTML += `<td>${pax.withTransport ? '✓' : '×'}</td>`;
+                pdfHTML += `<td>${pax.withZiarat ? '✓' : '×'}</td>`;
+                pdfHTML += `<td>${pax.food || '-'}</td>`;
+                pdfHTML += '</tr>';
+            });
+            if (!hasPaxData) {
+                pdfHTML += '<tr><td colspan="6">No passenger details entered</td></tr>';
+            }
+            pdfHTML += '</tbody></table>';
+            // Flights
+            pdfHTML += '<div class="pdf-section-title">Flight Details</div>';
+            pdfHTML += '<table class="pdf-table"><thead><tr><th>Airline</th><th>Flight No.</th><th>Sector</th><th>Flight Date</th><th>Departure</th><th>Arrival</th></tr></thead><tbody>';
+            let hasFlightData = false;
+            (voucher.flightDetails || []).forEach(flight => {
+                if (flight.airline || flight.flightNo) {
+                    hasFlightData = true;
+                    pdfHTML += '<tr>';
+                    pdfHTML += `<td>${flight.airline || '-'}</td>`;
+                    pdfHTML += `<td>${flight.flightNo || '-'}</td>`;
+                    pdfHTML += `<td>${flight.sector || '-'}</td>`;
+                    pdfHTML += `<td>${flight.flightDate || '-'}</td>`;
+                    pdfHTML += `<td>${flight.departureTime || '-'}</td>`;
+                    pdfHTML += `<td>${flight.arrivalTime || '-'}</td>`;
+                    pdfHTML += '</tr>';
+                }
+            });
+            if (!hasFlightData) {
+                pdfHTML += '<tr><td colspan="6">No flight details entered</td></tr>';
+            }
+            pdfHTML += '</tbody></table>';
+            // Accommodations
+            pdfHTML += '<div class="pdf-section-title">Accommodation Details</div>';
+            pdfHTML += '<table class="pdf-table"><thead><tr><th>City</th><th>Hotel Name</th><th>Confirmation Number</th><th>Check-In</th><th>Check-Out</th><th>Nights</th><th>Room</th></tr></thead><tbody>';
+            let hasAccommodationData = false;
+            (voucher.accommodationDetails || []).forEach(acc => {
+                if (acc.city || acc.hotelName) {
+                    hasAccommodationData = true;
+                    pdfHTML += '<tr>';
+                    pdfHTML += `<td>${acc.city || '-'}</td>`;
+                    pdfHTML += `<td>${acc.hotelName || '-'}</td>`;
+                    pdfHTML += `<td>${acc.confirmationNumber || '-'}</td>`;
+                    pdfHTML += `<td>${acc.checkIn || '-'}</td>`;
+                    pdfHTML += `<td>${acc.checkOut || '-'}</td>`;
+                    pdfHTML += `<td>${acc.nights || '-'}</td>`;
+                    pdfHTML += `<td>${acc.roomType || '-'}</td>`;
+                    pdfHTML += '</tr>';
+                }
+            });
+            if (!hasAccommodationData) {
+                pdfHTML += '<tr><td colspan="7">No accommodation details entered</td></tr>';
+            }
+            pdfHTML += '</tbody></table>';
+            // Contacts
+            pdfHTML += '<div class="pdf-section-title">Contact Details</div>';
+            pdfHTML += '<table class="pdf-table"><thead><tr><th>Name</th><th>Contact Number</th></tr></thead><tbody>';
+            let hasContactData = false;
+            (voucher.contactDetails || []).forEach(contact => {
+                if (contact.name || contact.contactNumber) {
+                    hasContactData = true;
+                    pdfHTML += '<tr>';
+                    pdfHTML += `<td>${contact.name || '-'}</td>`;
+                    pdfHTML += `<td>${contact.contactNumber || '-'}</td>`;
+                    pdfHTML += '</tr>';
+                }
+            });
+            if (!hasContactData) {
+                pdfHTML += '<tr><td colspan="2">No contact details entered</td></tr>';
+            }
+            pdfHTML += '</tbody></table>';
+            // Terms and Footer
+            pdfHTML += '<div class="pdf-section-title">Terms and Conditions</div>';
+            pdfHTML += `<ol style="font-size: 9px; line-height: 1.3;">
+                <li>I will abide by the details of this agreement as per the requirements, guidance, and regulations of the Ministry of Hajj & Umrah of the KSA.</li>
+                <li>In the event of my non-compliance with this package and should I overstay, I submit myself to the laid-down procedure of KSA.</li>
+                <li>In case of emergency, I shall report the matter to the service provider whose address in Makkah, Madinah, and Jeddah has been known to me.</li>
+                <li>That I will depart the Kingdom on completion of my package as per program & visa and will not overstay under any circumstances.</li>
+                <li>That I will not take up employment with or without pay.</li>
+                <li>It is not permitted for anyone to sleep or camp (with or without luggage) around the Holy sites; anyone apprehended by MOH will have to pay the fine and cost of accommodation. MOH will then release the passport.</li>
+                <li>Children under 10 years will share a bed with parents.</li>
+                <li>The company will not be held responsible for any service that is not mentioned on the voucher.</li>
+            </ol>`;
+            pdfHTML += `
+                <div class="pdf-footer">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <p><strong>Received By ____________________</strong></p>
+                            <small>Copyright © 2025. All rights reserved.</small>
+                        </div>
+                        <div style="text-align: right; font-size: 9px; line-height: 1.2;">
+                            <div><strong>Ph#:</strong> 0300-9666476</div>
+                            <div><strong>Email:</strong> info@alzahidmadni.com</div>
+                            <div><strong>Website:</strong> alzahidmadni.com</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            // Set the PDF container content
+            const pdfContainer = document.getElementById('pdfContainer');
+            pdfContainer.innerHTML = pdfHTML;
+            pdfContainer.style.display = 'block';
+            try {
+                const canvas = await html2canvas(pdfContainer, {
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#ffffff',
+                    width: 794,
+                    height: 1123
+                });
+                const imgData = canvas.toDataURL('image/png');
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgWidth = 210;
+                const pageHeight = 295;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 0;
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+                pdf.save(`Al_Zahid_Madni_Travels_Voucher_${voucher.voucherNo || (voucher.paxes && voucher.paxes[0] ? voucher.paxes[0].voucherNo : '')}.pdf`);
+            } catch (error) {
+                alert('PDF generation failed. Please try again.');
+            } finally {
+                pdfContainer.style.display = 'none';
+            }
         }
 
         // Fetch vouchers on page load
