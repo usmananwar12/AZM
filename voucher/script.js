@@ -163,11 +163,8 @@
             
             // Remarks
             const remarks = document.getElementById('remarks').value;
-            if (remarks) {
-                previewHTML += '<h5 class="mt-4">Remarks</h5>';
-                previewHTML += `<p>${remarks}</p>`;
-            }
-            
+            previewHTML += '<h5 class="mt-4">Remarks</h5>';
+            previewHTML += `<div>${remarks ? remarks.replace(/\n/g, '<br>') : 'No remarks entered.'}</div>`;
             document.getElementById('previewContent').innerHTML = previewHTML;
             document.getElementById('voucherPreview').style.display = 'block';
             
@@ -458,6 +455,7 @@ async function addVoucher() {
             });
         }
     });
+    const remarks = document.getElementById('remarks').value;
     // POST to backend with correct structure
     const voucherData = {
         voucherNo,
@@ -465,7 +463,8 @@ async function addVoucher() {
         paxes,
         flightDetails,
         accommodationDetails,
-        contactDetails
+        contactDetails,
+        remarks
     };
     try {
         const res = await fetch('https://azm-38x9.onrender.com/api/paxes', {

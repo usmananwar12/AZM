@@ -460,8 +460,8 @@
                                     <button type="button" class="btn btn-sm btn-outline-primary" id="addAccommodationRowBtn">Add Accommodation</button>
                                 </div>
                                 <h6>Contact Details</h6>
-                                <div class="table-responsive mb-3">
-                                    <table class="table table-bordered" id="editContactsTable">
+                                <div class="mb-3">
+                                    <table class="table" id="editContactsTable">
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
@@ -471,7 +471,11 @@
                                         </thead>
                                         <tbody></tbody>
                                     </table>
-                                    <button type="button" class="btn btn-sm btn-outline-primary" id="addContactRowBtn">Add Contact</button>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="addContactRow()">Add Contact</button>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Remarks</label>
+                                    <textarea class="form-control" id="editRemarks" rows="3" placeholder="Enter any additional remarks or special instructions..."></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Save Changes</button>
                             </form>
@@ -580,6 +584,7 @@
                 renderEditFlightsTable(voucher.flightDetails || []);
                 renderEditAccommodationsTable(voucher.accommodationDetails || []);
                 renderEditContactsTable(voucher.contactDetails || []);
+                document.getElementById('editRemarks').value = voucher.remarks || '';
                 const modal = new bootstrap.Modal(document.getElementById('editVoucherModal'));
                 modal.show();
             } catch (err) {
@@ -755,6 +760,7 @@
             const id = document.getElementById('editVoucherId').value;
             const voucherNo = document.getElementById('editVoucherNo').value;
             const voucherDate = document.getElementById('editVoucherDate').value;
+            const remarks = document.getElementById('editRemarks').value;
 
             const paxes = [];
             document.getElementById('editPaxesTable').querySelectorAll('tbody tr').forEach(row => {
@@ -833,7 +839,8 @@
                 paxes: paxes,
                 flightDetails: flightDetails,
                 accommodationDetails: accommodationDetails,
-                contactDetails: contactDetails
+                contactDetails: contactDetails,
+                remarks: remarks
             };
         }
 
@@ -958,6 +965,9 @@
                 pdfHTML += '<tr><td colspan="2">No contact details entered</td></tr>';
             }
             pdfHTML += '</tbody></table>';
+            // Remarks
+            pdfHTML += '<div class="pdf-section-title">Remarks</div>';
+            pdfHTML += `<div class="pdf-remarks">${voucher.remarks ? voucher.remarks.replace(/\n/g, '<br>') : 'No remarks entered.'}</div>`;
             // Terms and Footer
             pdfHTML += '<div class="pdf-section-title">Terms and Conditions</div>';
             pdfHTML += `<ol style="font-size: 9px; line-height: 1.3;">

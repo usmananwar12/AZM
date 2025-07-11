@@ -66,7 +66,8 @@ const voucherSchema = new mongoose.Schema({
     contactDetails: [{
         name: String,
         contactNumber: String
-    }]
+    }],
+    remarks: { type: String }
 }, { timestamps: true });
 const Voucher = mongoose.model('vouchers', voucherSchema);
 
