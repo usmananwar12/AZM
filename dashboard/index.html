@@ -858,7 +858,7 @@
         // Download Voucher Logic (voucher page style, no preview)
         async function downloadVoucher(id) {
             try {
-                const res = await fetch('https://azm-38x9.onrender.com/paxes/' + id);
+                const res = await fetch('https://azm-38x9.onrender.com/api/paxes/' + id);
                 if (!res.ok) throw new Error('Failed to fetch voucher');
                 const voucher = await res.json();
                 await generateVoucherPDF(voucher);
