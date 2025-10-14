@@ -641,7 +641,7 @@
                     <tr>
                         <td><input type="text" class="form-control" value="${accommodation.city}" ></td>
                         <td><input type="text" class="form-control" value="${accommodation.hotelName}" ></td>
-                        <td><input type="text" class="form-control" value="${accommodation.confirmationNo}" ></td>
+                        <td><input type="text" class="form-control" value="${accommodation.confirmationNumber || ''}" ></td>
                         <td><input type="text" class="form-control" value="${accommodation.checkIn}" ></td>
                         <td><input type="text" class="form-control" value="${accommodation.checkOut}" ></td>
                         <td><input type="text" class="form-control" value="${accommodation.nights}" ></td>
@@ -804,7 +804,7 @@
             document.getElementById('editAccommodationsTable').querySelectorAll('tbody tr').forEach(row => {
                 const city = row.querySelector('td:nth-child(1) input').value;
                 const hotelName = row.querySelector('td:nth-child(2) input').value;
-                const confirmationNo = row.querySelector('td:nth-child(3) input').value;
+                const confirmationNumber = row.querySelector('td:nth-child(3) input').value;
                 const checkIn = row.querySelector('td:nth-child(4) input').value;
                 const checkOut = row.querySelector('td:nth-child(5) input').value;
                 const nights = row.querySelector('td:nth-child(6) input').value;
@@ -813,7 +813,7 @@
                     _id: row.dataset.accommodationId, // Assuming accommodationDetails have _id
                     city: city,
                     hotelName: hotelName,
-                    confirmationNo: confirmationNo,
+                    confirmationNumber: confirmationNumber,
                     checkIn: checkIn,
                     checkOut: checkOut,
                     nights: nights,
@@ -1032,8 +1032,15 @@
             }
         }
 
-        // Fetch vouchers on page load
-        window.addEventListener('DOMContentLoaded', fetchVouchers);
+        // Add event listeners for Add buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchVouchers();
+            
+            // Add event listeners for Add buttons
+            document.getElementById('addPaxRowBtn').addEventListener('click', addPaxRow);
+            document.getElementById('addFlightRowBtn').addEventListener('click', addFlightRow);
+            document.getElementById('addAccommodationRowBtn').addEventListener('click', addAccommodationRow);
+        });
     </script>
 </body>
 </html>
